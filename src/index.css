@@ -2089,7 +2089,7 @@ body {
   }
   
   .article-card-minimal {
-    padding: 16px 0;
+    padding: 16px 24px;
     flex-direction: row;
     align-items: flex-start;
     gap: 16px;
@@ -2155,7 +2155,7 @@ body {
   }
 
   .container .article-card-minimal {
-    padding: 16px 0;
+    padding: 16px 24px;
     flex-direction: row;
     align-items: flex-start;
     gap: 16px;
@@ -2163,7 +2163,7 @@ body {
   }
 
   .container .article-card-minimal:hover {
-    padding-left: 0;
+    padding-left: 24px;
   }
 
   .container .article-card-title {

@@ -124,37 +124,42 @@ const AuthorPage = () => {
           <p>该作者暂无文章</p>
         </div>
       ) : (
-        <div className="article-list">
-          {articles.map((article) => (
+        <div className="articles-grid">
+          {articles.map((article) => {
+            const tags = article.tags 
+              ? (Array.isArray(article.tags) ? article.tags : article.tags.split(','))
+              : []
+            const displayTags = tags.slice(0, 4)
+            return (
             <div 
               key={article.article_id} 
-              className="article-card"
+              className="article-card-minimal"
               onClick={() => navigate(`/article/${article.article_id}`)}
             >
-              <div className="article-card-header">
-                <div>
-                  <h2 className="article-title">{article.title}</h2>
-                  <div className="article-meta">
-                    <span><CalendarOutlined /> {formatDate(article.create_time)}</span>
+              <div className="article-card-left">
+                <h2 className="article-card-title">{article.title}</h2>
+                {displayTags.length > 0 && (
+                  <div className="article-card-tags">
+                    {displayTags.map((tagItem, index) => (
+                      <Link 
+                        key={index} 
+                        to={`/tags/${typeof tagItem === 'string' ? tagItem.trim() : tagItem}`}
+                        className="article-tag"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {typeof tagItem === 'string' ? tagItem.trim() : tagItem}
+                      </Link>
+                    ))}
                   </div>
-                </div>
+                )}
               </div>
-              {article.tags && (
-                <div className="article-tags">
-                  {(Array.isArray(article.tags) ? article.tags : article.tags.split(',')).map((tagItem, index) => (
-                    <Link 
-                      key={index} 
-                      to={`/tags/${typeof tagItem === 'string' ? tagItem.trim() : tagItem}`}
-                      className="tag"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      {typeof tagItem === 'string' ? tagItem.trim() : tagItem}
-                    </Link>
-                  ))}
-                </div>
-              )}
+              <div className="article-card-right">
+                <span className="article-card-date">
+                  <CalendarOutlined /> {formatDate(article.create_time)}
+                </span>
+              </div>
             </div>
-          ))}
+          )})}
         </div>
       )}
 
