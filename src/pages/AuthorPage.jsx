@@ -56,6 +56,17 @@ const AuthorPage = () => {
     }).replace(/\//g, '-')
   }
 
+  // 生日只显示月日
+  const formatBirthday = (dateString) => {
+    if (!dateString) return ''
+    const date = new Date(dateString)
+    return date.toLocaleDateString('zh-CN', {
+      month: '2-digit',
+      day: '2-digit',
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
+    }).replace(/\//g, '-')
+  }
+
   if (loading) {
     return (
       <div className="container">
@@ -92,7 +103,7 @@ const AuthorPage = () => {
           <p className="author-bio">{profile?.bio || '暂无简介'}</p>
           <div className="author-meta-group">
             <span className="author-meta">
-              <GiftOutlined /> 生日：{profile?.birthday ? formatDate(profile.birthday) : '保密'}
+              <GiftOutlined /> 生日：{profile?.birthday ? formatBirthday(profile.birthday) : '保密'}
             </span>
             <span className="author-meta">
               <CalendarOutlined /> 年龄：{profile?.age ?? '保密'}
