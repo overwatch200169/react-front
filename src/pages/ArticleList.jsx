@@ -144,16 +144,40 @@ const ArticleList = () => {
                 ) : (
                   <>
                     <div className="articles-grid">
-                      {articles.map((article) => (
+                      {articles.map((article) => {
+                        const tags = article.tags 
+                          ? (Array.isArray(article.tags) ? article.tags : article.tags.split(','))
+                          : []
+                        const displayTags = tags.slice(0, 4) // 最多显示4个标签
+                        return (
                         <div 
                           key={article.article_id} 
                           className="article-card-minimal"
                           onClick={() => navigate(`/article/${article.article_id}`)}
                         >
-                          <h2 className="article-card-title">{article.title}</h2>
+                          <div className="article-card-left">
+                            <h2 className="article-card-title">{article.title}</h2>
+                            {displayTags.length > 0 && (
+                              <div className="article-card-tags">
+                                {displayTags.map((tag, index) => (
+                                  <span 
+                                    key={index} 
+                                    className="article-tag"
+                                    onClick={(e) => {
+                                      e.stopPropagation()
+                                      navigate(`/tags/${typeof tag === 'string' ? tag.trim() : tag}`)
+                                    }}
+                                  >
+                                    {typeof tag === 'string' ? tag.trim() : tag}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
                           <span className="article-card-date">{formatDate(article.create_time)}</span>
                         </div>
-                      ))}
+                        )
+                      })}
                     </div>
 
                     {getPageButtons() && (
@@ -191,9 +215,19 @@ const ArticleList = () => {
   }
 
   // 非首页（搜索/筛选结果）保持原有样式
+  const isSearchResult = searchQuery || dateYearMonth || tag
+
   return (
     <div className="container">
       <div className="page-header">
+        {isSearchResult && (
+          <button 
+            className="back-to-list-btn"
+            onClick={() => navigate('/')}
+          >
+            ← 返回文章列表
+          </button>
+        )}
         <h1 className="page-title">
           {dateYearMonth
             ? dateYearMonth
@@ -218,16 +252,40 @@ const ArticleList = () => {
         </div>
       ) : (
         <div className="articles-grid">
-          {articles.map((article) => (
+          {articles.map((article) => {
+            const tags = article.tags 
+              ? (Array.isArray(article.tags) ? article.tags : article.tags.split(','))
+              : []
+            const displayTags = tags.slice(0, 4)
+            return (
             <div 
               key={article.article_id} 
               className="article-card-minimal"
               onClick={() => navigate(`/article/${article.article_id}`)}
             >
-              <h2 className="article-card-title">{article.title}</h2>
+              <div className="article-card-left">
+                <h2 className="article-card-title">{article.title}</h2>
+                {displayTags.length > 0 && (
+                  <div className="article-card-tags">
+                    {displayTags.map((tag, index) => (
+                      <span 
+                        key={index} 
+                        className="article-tag"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          navigate(`/tags/${typeof tag === 'string' ? tag.trim() : tag}`)
+                        }}
+                      >
+                        {typeof tag === 'string' ? tag.trim() : tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
               <span className="article-card-date">{formatDate(article.create_time)}</span>
             </div>
-          ))}
+            )
+          })}
         </div>
       )}
     </div>

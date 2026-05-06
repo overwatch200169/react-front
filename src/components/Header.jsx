@@ -23,13 +23,27 @@ const Header = () => {
     setSearchQuery('')
   }
 
+  const handleHomeClick = (e) => {
+    e.preventDefault()
+    navigate('/')
+    // 滚动到文章列表区域
+    setTimeout(() => {
+      const contentSection = document.getElementById('articles-section')
+      if (contentSection) {
+        contentSection.scrollIntoView({ behavior: 'smooth' })
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      }
+    }, 100)
+  }
+
   return (
     <header className="header">
       <div className="header-content">
-        <Link to="/" className="logo">
+        <a href="/" onClick={handleHomeClick} className="logo">
           <span className="logo-icon"><FileTextOutlined /></span>
           <span>我的博客</span>
-        </Link>
+        </a>
 
         <form onSubmit={handleSearch} className="search-form">
           <input
