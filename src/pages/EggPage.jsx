@@ -122,8 +122,9 @@ const EggPage = () => {
                 }))}
                 angleField="value"
                 colorField="type"
-                innerRadius={0.6}
-                height={800}
+                radius={0.8}
+                innerRadius={0.4}
+                height={700}
                 marginTop={50}
                 marginLeft={20}
                 marginBottom={50}
