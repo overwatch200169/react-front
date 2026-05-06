@@ -161,6 +161,7 @@
   --loom-text: #DCE3DD;
   --loom-text-secondary: #C8D4CB;
   --loom-border: #3D4D42;
+  --loom-card-bg: #232F27;
   --loom-card-hover: #2D3B32;
   --hero-gradient-start: #232F27;
   --hero-gradient-mid: #1A2E22;
@@ -235,6 +236,7 @@
     --loom-text: #DCE3DD;
     --loom-text-secondary: #C8D4CB;
     --loom-border: #3D4D42;
+    --loom-card-bg: #232F27;
     --loom-card-hover: #2D3B32;
     --hero-gradient-start: #232F27;
     --hero-gradient-mid: #1A2E22;
@@ -1795,6 +1797,7 @@ a:hover {
   --loom-text: #1F2937;
   --loom-text-secondary: #6B7280;
   --loom-border: #E5E7EB;
+  --loom-card-bg: white;
   --loom-card-hover: #E8EDE9;
   
   /* Hero Gradient */
@@ -1982,7 +1985,7 @@ body {
 
 /* Minimal Article Card */
 .article-card-minimal {
-  background: white;
+  background: var(--loom-card-bg);
   padding: 28px 32px;
   cursor: pointer;
   transition: all 0.25s ease;
@@ -1998,7 +2001,7 @@ body {
 }
 
 .article-card-minimal:active {
-  background: #DCFCE7;
+  background: var(--loom-card-hover);
 }
 
 .article-card-left {
@@ -2033,7 +2036,7 @@ body {
   padding: 3px 10px;
   font-size: 0.75rem;
   font-weight: 500;
-  color: var(--loom-primary-dark);
+  color: var(--loom-primary);
   background: var(--loom-card-hover);
   border-radius: 4px;
   transition: all 0.2s ease;
@@ -2042,7 +2045,7 @@ body {
 
 .article-tag:hover {
   background: var(--loom-primary);
-  color: white;
+  color: var(--loom-card-bg);
 }
 
 .article-card-date {
