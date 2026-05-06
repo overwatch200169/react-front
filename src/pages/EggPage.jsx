@@ -113,11 +113,12 @@ const EggPage = () => {
         {checkiData.length > 0 && (
           <div className="about-section">
             <h2><CoffeeOutlined /> 切奇统计</h2>
-            <div style={{ maxWidth: 900, margin: '0 auto', minHeight: 500, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ maxWidth: 1000, margin: '0 auto', minHeight: 500, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Pie
                 data={checkiData.map(item => ({
                   type: item.name || '未知',
-                  value: item.cheki_count || 0
+                  value: item.cheki_count || 0,
+                  percent: (item.cheki_count / totalCount) * 100
                 }))}
                 angleField="value"
                 colorField="type"
@@ -128,7 +129,8 @@ const EggPage = () => {
                 marginBottom={50}
                 marginRight={20}
                 label={{
-                  text: (d) => `${d.type}\n ${d.value}`,
+                  
+                  text: (d) => `${d.type}\n ${d.value}张\n ${d.percent.toFixed(2)}%`,
                   position: 'spider',
                   style: {
                     fontWeight: 'bold',
@@ -140,6 +142,15 @@ const EggPage = () => {
                     position: 'right',
                     rowPadding: 5,
                   },
+                }}
+                tooltip={{
+                  title: '切奇详情',
+                  items: [
+                    (datum) => ({
+                      name: datum.type,
+                      value: `${datum.value} 张`
+                    })
+                  ]
                 }}
                 annotations={[
                   {
