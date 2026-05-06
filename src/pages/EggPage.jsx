@@ -8,11 +8,20 @@ const EggPage = () => {
   const [eggList, setEggList] = useState([])
   const [checkiData, setCheckiData] = useState([])
   const [loading, setLoading] = useState(true)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     fetchEggData()
     fetchCheckiData()
     window.scrollTo(0, 0)
+    
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
   }, [])
 
   const fetchEggData = async () => {
@@ -113,7 +122,15 @@ const EggPage = () => {
         {checkiData.length > 0 && (
           <div className="about-section">
             <h2><CoffeeOutlined /> 切奇统计</h2>
-            <div style={{ maxWidth: 1000, margin: '0 auto', minHeight: 500, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{
+              maxWidth: isMobile ? '100%' : 900,
+              margin: '0 auto',
+              minHeight: isMobile ? 400 : 500,
+              padding: isMobile ? '10px' : '0',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
               <Pie
                 data={checkiData.map(item => ({
                   type: item.name || '未知',
@@ -122,32 +139,32 @@ const EggPage = () => {
                 }))}
                 angleField="value"
                 colorField="type"
-                radius={0.9}
-                innerRadius={0.4}
-                height={700}
-                marginTop={50}
-                marginLeft={20}
-                marginBottom={50}
-                marginRight={20}
+                radius={isMobile ? 0.7 : 0.9}
+                innerRadius={isMobile ? 0.3 : 0.5}
+                height={isMobile ? 350 : 700}
+                marginTop={isMobile ? 20 : 50}
+                marginLeft={isMobile ? 10 : 20}
+                marginBottom={isMobile ? 60 : 50}
+                marginRight={isMobile ? 10 : 20}
                 label={{
-                  
-                  text: (d) => `${d.type}\n ${d.value}张\n ${d.percent.toFixed(2)}%`,
+                  text: (d) => isMobile ? d.type : `${d.type}\n ${d.value}张\n ${d.percent.toFixed(2)}%`,
                   position: 'spider',
                   transform: [
                     {
                       type: 'overlapDodgeY',
-                      padding: 30,
-                      maxIterations: 50
+                      padding: isMobile ? 2 : 30,
+                      maxIterations: isMobile ? 30 : 50
                     }
                   ],
                   style: {
                     fontWeight: 'bold',
+                    fontSize: isMobile ? 10 : 12,
                   },
                 }}
                 legend={{
                   color: {
                     title: false,
-                    position: 'right',
+                    position: isMobile ? 'bottom' : 'right',
                     rowPadding: 5,
                   },
                 }}
@@ -168,7 +185,7 @@ const EggPage = () => {
                       x: '50%',
                       y: '50%',
                       textAlign: 'center',
-                      fontSize: 14,
+                      fontSize: isMobile ? 12 : 14,
                       fontWeight: 'bold',
                     },
                   },
