@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { FileTextOutlined, SearchOutlined } from '@ant-design/icons'
+import { FileTextOutlined, SearchOutlined, SunOutlined, MoonOutlined } from '@ant-design/icons'
+import { useTheme } from '../context/ThemeContext'
 
 const Header = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
+  const { isDark, toggleTheme } = useTheme()
 
   const isActive = (path) => {
     if (path === '/') {
@@ -61,6 +63,14 @@ const Header = () => {
           <Link to="/about" className={`nav-link ${isActive('/about') ? 'active' : ''}`}>
             关于
           </Link>
+          {/* 主题切换按钮 - 仅桌面端显示 */}
+          <button 
+            className="theme-toggle-btn desktop-only" 
+            onClick={toggleTheme}
+            title={isDark ? '切换到亮色模式' : '切换到暗色模式'}
+          >
+            {isDark ? <SunOutlined /> : <MoonOutlined />}
+          </button>
         </nav>
       </div>
     </header>

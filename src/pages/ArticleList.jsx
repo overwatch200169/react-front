@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams, useSearchParams, Link } from 'react-router-dom'
 import { searchArticles, getArticles, getUserById } from '../services/api'
-import { DownOutlined } from '@ant-design/icons'
+import { DownOutlined, UnorderedListOutlined, ClockCircleOutlined } from '@ant-design/icons'
 import TimelineSidebar from '../components/TimelineSidebar'
 
 const ArticleList = () => {
@@ -12,6 +12,8 @@ const ArticleList = () => {
   const [totalArticles, setTotalArticles] = useState(0)
   const [currentOffset, setCurrentOffset] = useState(0)
   const [searchParams] = useSearchParams()
+  const [isMobile, setIsMobile] = useState(false)
+  const [activeTab, setActiveTab] = useState('list') // 'list' | 'timeline'
   const PAGE_SIZE = 50
   const searchQuery = searchParams.get('search')
   const dateYearMonth = searchParams.get('date_year_month')
@@ -19,6 +21,15 @@ const ArticleList = () => {
   const navigate = useNavigate()
 
   const isHomePage = !searchQuery && !dateYearMonth && !tag
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   useEffect(() => {
     fetchArticles()
@@ -79,7 +90,7 @@ const ArticleList = () => {
       year: 'numeric',
       month: '2-digit',
       day: '2-digit',
-      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone // 自动使用本地时区
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
     }).replace(/\//g, '-')
   }
 
@@ -133,97 +144,127 @@ const ArticleList = () => {
 
         {/* Articles Section */}
         <section id="articles-section" className="articles-section">
+          {/* 移动端 Tab 切换 */}
+          {isMobile && (
+            <div className="mobile-tabs">
+              <button 
+                className={`mobile-tab ${activeTab === 'list' ? 'active' : ''}`}
+                onClick={() => setActiveTab('list')}
+              >
+                <UnorderedListOutlined /> 文章列表
+              </button>
+              <button 
+                className={`mobile-tab ${activeTab === 'timeline' ? 'active' : ''}`}
+                onClick={() => setActiveTab('timeline')}
+              >
+                <ClockCircleOutlined /> 时间线
+              </button>
+            </div>
+          )}
+
           <div className="articles-layout">
             <div className="articles-main">
-              <div className="articles-container">
-                {loading ? (
-                  <div className="loading">
-                    <div className="loading-spinner"></div>
-                  </div>
-                ) : error ? (
-                  <div className="error">{error}</div>
-                ) : articles.length === 0 ? (
-                  <div className="empty-state">
-                    <p>暂无文章</p>
-                  </div>
-                ) : (
-                  <>
-                    <div className="articles-grid">
-                      {articles.map((article) => {
-                        const tags = article.tags 
-                          ? (Array.isArray(article.tags) ? article.tags : article.tags.split(','))
-                          : []
-                        const displayTags = tags.slice(0, 4) // 最多显示4个标签
-                        return (
-                        <div 
-                          key={article.article_id} 
-                          className="article-card-minimal"
-                          onClick={() => navigate(`/article/${article.article_id}`)}
-                        >
-                          <div className="article-card-left">
-                            <h2 className="article-card-title">{article.title}</h2>
-                            {displayTags.length > 0 && (
-                              <div className="article-card-tags">
-                                {displayTags.map((tag, index) => (
-                                  <span 
-                                    key={index} 
-                                    className="article-tag"
-                                    onClick={(e) => {
-                                      e.stopPropagation()
-                                      navigate(`/tags/${typeof tag === 'string' ? tag.trim() : tag}`)
-                                    }}
-                                  >
-                                    {typeof tag === 'string' ? tag.trim() : tag}
-                                  </span>
-                                ))}
-                              </div>
-                            )}
-                          </div>
-                          <div className="article-card-right">
-                            {article.author_id && (
-                              <Link 
-                                to={`/author/${article.author_id}`} 
-                                className="article-card-author"
-                                onClick={(e) => e.stopPropagation()}
-                              >
-                                {authorNames[article.author_id] || '加载中...'}
-                              </Link>
-                            )}
-                            <span className="article-card-date">{formatDate(article.create_time)}</span>
-                          </div>
-                        </div>
-                        )
-                      })}
+              {/* 移动端只显示当前激活的 Tab 内容 */}
+              {(!isMobile || activeTab === 'list') && (
+                <div className="articles-container">
+                  {loading ? (
+                    <div className="loading">
+                      <div className="loading-spinner"></div>
                     </div>
-
-                    {getPageButtons() && (
-                      <div className="pagination">
-                        {currentOffset > 0 && (
-                          <button
-                            onClick={() => handlePageChange(currentOffset - PAGE_SIZE)}
-                            className="pagination-button"
+                  ) : error ? (
+                    <div className="error">{error}</div>
+                  ) : articles.length === 0 ? (
+                    <div className="empty-state">
+                      <p>暂无文章</p>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="articles-grid">
+                        {articles.map((article) => {
+                          const tags = article.tags 
+                            ? (Array.isArray(article.tags) ? article.tags : article.tags.split(','))
+                            : []
+                          const displayTags = tags.slice(0, 4)
+                          return (
+                          <div 
+                            key={article.article_id} 
+                            className="article-card-minimal"
+                            onClick={() => navigate(`/article/${article.article_id}`)}
                           >
-                            ← 上一页
-                          </button>
-                        )}
-                        {getPageButtons()}
-                        {currentOffset + PAGE_SIZE < totalArticles && (
-                          <button
-                            onClick={() => handlePageChange(currentOffset + PAGE_SIZE)}
-                            className="pagination-button"
-                          >
-                            下一页 →
-                          </button>
-                        )}
+                            <div className="article-card-left">
+                              <h2 className="article-card-title">{article.title}</h2>
+                              {displayTags.length > 0 && (
+                                <div className="article-card-tags">
+                                  {displayTags.map((tag, index) => (
+                                    <span 
+                                      key={index} 
+                                      className="article-tag"
+                                      onClick={(e) => {
+                                        e.stopPropagation()
+                                        navigate(`/tags/${typeof tag === 'string' ? tag.trim() : tag}`)
+                                      }}
+                                    >
+                                      {typeof tag === 'string' ? tag.trim() : tag}
+                                    </span>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                            <div className="article-card-right">
+                              {article.author_id && (
+                                <Link 
+                                  to={`/author/${article.author_id}`} 
+                                  className="article-card-author"
+                                  onClick={(e) => e.stopPropagation()}
+                                >
+                                  {authorNames[article.author_id] || '加载中...'}
+                                </Link>
+                              )}
+                              <span className="article-card-date">{formatDate(article.create_time)}</span>
+                            </div>
+                          </div>
+                          )
+                        })}
                       </div>
-                    )}
-                  </>
-                )}
-              </div>
+
+                      {getPageButtons() && (
+                        <div className="pagination">
+                          {currentOffset > 0 && (
+                            <button
+                              onClick={() => handlePageChange(currentOffset - PAGE_SIZE)}
+                              className="pagination-button"
+                            >
+                              ← 上一页
+                            </button>
+                          )}
+                          {getPageButtons()}
+                          {currentOffset + PAGE_SIZE < totalArticles && (
+                            <button
+                              onClick={() => handlePageChange(currentOffset + PAGE_SIZE)}
+                              className="pagination-button"
+                            >
+                              下一页 →
+                            </button>
+                          )}
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+              )}
+              {/* 移动端时间线 Tab */}
+              {isMobile && activeTab === 'timeline' && (
+                <div className="mobile-timeline-container">
+                  <TimelineSidebar />
+                </div>
+              )}
             </div>
-            <aside className="articles-sidebar">
-              <TimelineSidebar />
-            </aside>
+            {/* 桌面端显示侧边栏 */}
+            {!isMobile && (
+              <aside className="articles-sidebar">
+                <TimelineSidebar />
+              </aside>
+            )}
           </div>
         </section>
       </div>
@@ -235,7 +276,6 @@ const ArticleList = () => {
 
   const handleBackToList = () => {
     navigate('/')
-    // 滚动到文章列表区域
     setTimeout(() => {
       const contentSection = document.getElementById('articles-section')
       if (contentSection) {
