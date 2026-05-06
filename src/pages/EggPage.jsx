@@ -185,7 +185,7 @@ const EggPage = () => {
                       x: '50%',
                       y: '50%',
                       textAlign: 'center',
-                      fontSize: isMobile ? 12 : 14,
+                      fontSize: isMobile ? 9 : 14,
                       fontWeight: 'bold',
                     },
                   },
