@@ -165,4 +165,15 @@ export const getEgg = async () => {
   }
 }
 
+// 获取切奇统计数据
+export const getEggChecki = async () => {
+  try {
+    const response = await api.get('/egg/checki')
+    return response.data
+  } catch (error) {
+    console.error('获取切奇数据失败:', error)
+    throw error
+  }
+}
+
 export default api

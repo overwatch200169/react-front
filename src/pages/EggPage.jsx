@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react'
 import { Table } from 'antd'
-import { getEgg } from '../services/api'
+import { Pie } from '@ant-design/plots'
+import { getEgg, getEggChecki } from '../services/api'
 import { CoffeeOutlined } from '@ant-design/icons'
 
 const EggPage = () => {
   const [eggList, setEggList] = useState([])
+  const [checkiData, setCheckiData] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     fetchEggData()
+    fetchCheckiData()
     window.scrollTo(0, 0)
   }, [])
 
@@ -16,7 +19,6 @@ const EggPage = () => {
     try {
       setLoading(true)
       const data = await getEgg()
-      // 支持 results 数组 + total 的结构，或直接返回数组
       const list = data.results || data || []
       setEggList(list)
     } catch (err) {
@@ -25,6 +27,17 @@ const EggPage = () => {
       setLoading(false)
     }
   }
+
+  const fetchCheckiData = async () => {
+    try {
+      const data = await getEggChecki()
+      setCheckiData(data || [])
+    } catch (err) {
+      console.error('获取切奇数据失败:', err)
+    }
+  }
+
+  const totalCount = checkiData.reduce((sum, item) => sum + (item.cheki_count || 0), 0)
 
   const formatDate = (dateString) => {
     if (!dateString) return '-'
@@ -96,6 +109,55 @@ const EggPage = () => {
             style={{ maxWidth: 800, margin: '0 auto' }}
           />
         </div>
+
+        {checkiData.length > 0 && (
+          <div className="about-section">
+            <h2><CoffeeOutlined /> 切奇统计</h2>
+            <div style={{ maxWidth: 900, margin: '0 auto', minHeight: 500, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Pie
+                data={checkiData.map(item => ({
+                  type: item.name || '未知',
+                  value: item.cheki_count || 0
+                }))}
+                angleField="value"
+                colorField="type"
+                innerRadius={0.6}
+                height={800}
+                marginTop={50}
+                marginLeft={20}
+                marginBottom={50}
+                marginRight={20}
+                label={{
+                  text: (d) => `${d.type}\n ${d.value}`,
+                  position: 'spider',
+                  style: {
+                    fontWeight: 'bold',
+                  },
+                }}
+                legend={{
+                  color: {
+                    title: false,
+                    position: 'right',
+                    rowPadding: 5,
+                  },
+                }}
+                annotations={[
+                  {
+                    type: 'text',
+                    style: {
+                      text: `切奇总数：${totalCount}`,
+                      x: '50%',
+                      y: '50%',
+                      textAlign: 'center',
+                      fontSize: 14,
+                      fontWeight: 'bold',
+                    },
+                  },
+                ]}
+              />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
