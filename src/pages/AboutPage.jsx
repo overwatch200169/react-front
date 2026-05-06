@@ -208,20 +208,20 @@ const AboutPage = () => {
                 disabled={isSubmitting}
                 style={{ width: 200 }}
               />
-              {captchaLoading ? (
-                <div className="captcha-loading">
+              <div className="captcha-loading">
+                {captchaLoading ? (
                   <Spin size="small" />
-                </div>
-              ) : captchaImage ? (
-                <img
-                  className="captcha-image"
-                  src={captchaImage}
-                  alt="验证码"
-                  onClick={fetchNewCaptcha}
-                  title="点击刷新验证码"
-                  style={{ cursor: 'pointer', marginLeft: 12 }}
-                />
-              ) : null}
+                ) : captchaImage ? (
+                  <img
+                    className="captcha-image"
+                    src={captchaImage}
+                    alt="验证码"
+                    onClick={fetchNewCaptcha}
+                    title="点击刷新验证码"
+                    style={{ cursor: 'pointer' }}
+                  />
+                ) : null}
+              </div>
             </div>
             
             <Button 

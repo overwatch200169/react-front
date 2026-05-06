@@ -1640,8 +1640,8 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 60px;
-  height: 40px;
+  width: 120px;
+  height: 48px;
   background: var(--md-surface-container-high);
   border-radius: var(--md-shape-medium);
   margin-left: 12px;
@@ -1652,25 +1652,15 @@ a:hover {
 }
 
 .captcha-image {
-  width: 120px;
-  height: 48px;
-  background: var(--md-surface-container-high);
-  border-radius: var(--md-shape-medium);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  overflow: hidden;
-  transition: background-color var(--md-transition-short) var(--md-easing-standard);
-}
-
-.captcha-image:hover {
-  background: var(--md-surface-container-highest);
-}
-
-.captcha-image :global(svg) {
   width: 100%;
   height: 100%;
+  object-fit: contain;
+  border-radius: var(--md-shape-medium);
+  cursor: pointer;
+}
+
+.captcha-loading:hover {
+  background: var(--md-surface-container-highest);
 }
 
 .refresh-captcha-btn {
