@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Input, Button, message, Result, Spin, LoadingOutlined } from 'antd'
-import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'
+import { Input, Button, message, Result, Spin } from 'antd'
+import { CheckCircleOutlined, CloseCircleOutlined, LoadingOutlined} from '@ant-design/icons'
 import { UserOutlined, BookOutlined, ToolOutlined, MailOutlined, CoffeeOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import { getUserProfile, getCaptcha, sendContactEmail } from '../services/api'
