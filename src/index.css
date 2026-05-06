@@ -8,23 +8,23 @@
 }
 
 :root {
-  /* Primary Colors */
-  --md-primary: #006B5E;
+  /* Primary Colors - 低饱和度浅绿色 */
+  --md-primary: #6B9B7A;
   --md-on-primary: #FFFFFF;
-  --md-primary-container: #9EF2E4;
-  --md-on-primary-container: #002020;
+  --md-primary-container: #E8F0EB;
+  --md-on-primary-container: #1A2E22;
 
   /* Secondary Colors */
-  --md-secondary: #4A635D;
+  --md-secondary: #5A8A69;
   --md-on-secondary: #FFFFFF;
-  --md-secondary-container: #C2E8E0;
-  --md-on-secondary-container: #06201C;
+  --md-secondary-container: #D4E5D9;
+  --md-on-secondary-container: #1A2E22;
 
   /* Tertiary Colors */
-  --md-tertiary: #386667;
+  --md-tertiary: #4A7A59;
   --md-on-tertiary: #FFFFFF;
-  --md-tertiary-container: #B8E4E0;
-  --md-on-tertiary-container: #001F1E;
+  --md-tertiary-container: #C8DCD9;
+  --md-on-tertiary-container: #1A2E22;
 
   /* Error Colors */
   --md-error: #B3261E;
@@ -32,21 +32,21 @@
   --md-error-container: #F9DEDC;
   --md-on-error-container: #410E0B;
 
-  /* Surface Colors */
-  --md-surface: #F5FFFC;
-  --md-surface-dim: #B8D8D3;
-  --md-surface-container: #E8F5F2;
-  --md-surface-container-low: #F0FAF7;
-  --md-surface-container-high: #DCEEE9;
-  --md-surface-container-highest: #D0E8E3;
-  --md-on-surface: #191C1C;
-  --md-on-surface-variant: #3F4947;
-  --md-outline: #6F7976;
-  --md-outline-variant: #BEC9C5;
+  /* Surface Colors - 低饱和度浅绿灰底色 */
+  --md-surface: #F5F7F6;
+  --md-surface-dim: #D4DDD7;
+  --md-surface-container: #E8EDE9;
+  --md-surface-container-low: #F0F2F0;
+  --md-surface-container-high: #DCE3DD;
+  --md-surface-container-highest: #D0D9D3;
+  --md-on-surface: #2D3B32;
+  --md-on-surface-variant: #3D4D42;
+  --md-outline: #6B9B7A;
+  --md-outline-variant: #C8D4CB;
 
   /* Background */
-  --md-background: #F5FFFC;
-  --md-on-background: #191C1C;
+  --md-background: #F5F7F6;
+  --md-on-background: #2D3B32;
 
   /* Elevation */
   --md-elevation-1: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
@@ -94,23 +94,23 @@
 
 /* Manual Theme Override - takes priority over system preference */
 :root[data-theme="dark"] {
-  /* Primary Colors */
-  --md-primary: #4DD9C0;
-  --md-on-primary: #003731;
-  --md-primary-container: #005048;
-  --md-on-primary-container: #9EF2E4;
+  /* Primary Colors - 低饱和度柔和绿 */
+  --md-primary: #7AAF8A;
+  --md-on-primary: #1A2E22;
+  --md-primary-container: #3D4D42;
+  --md-on-primary-container: #D0D9D3;
 
   /* Secondary Colors */
-  --md-secondary: #B1CCC6;
-  --md-on-secondary: #1C3531;
-  --md-secondary-container: #324B47;
-  --md-on-secondary-container: #C2E8E0;
+  --md-secondary: #7AAF8A;
+  --md-on-secondary: #1A2E22;
+  --md-secondary-container: #3D4D42;
+  --md-on-secondary-container: #D0D9D3;
 
   /* Tertiary Colors */
-  --md-tertiary: #A0CFCC;
-  --md-on-tertiary: #003735;
-  --md-tertiary-container: #1E4D4B;
-  --md-on-tertiary-container: #B8E4E0;
+  --md-tertiary: #6B9B7A;
+  --md-on-tertiary: #1A2E22;
+  --md-tertiary-container: #4D5D52;
+  --md-on-tertiary-container: #C8D4CB;
 
   /* Error Colors */
   --md-error: #F2B8B5;
@@ -118,21 +118,21 @@
   --md-error-container: #8C1D18;
   --md-on-error-container: #F9DEDC;
 
-  /* Surface Colors */
-  --md-surface: #191C1C;
-  --md-surface-dim: #111414;
-  --md-surface-container: #1D2120;
-  --md-surface-container-low: #171B1B;
-  --md-surface-container-high: #252A29;
-  --md-surface-container-highest: #303534;
-  --md-on-surface: #E1E3E1;
-  --md-on-surface-variant: #BEC9C5;
-  --md-outline: #899390;
-  --md-outline-variant: #3F4947;
+  /* Surface Colors - 低饱和度深灰绿底色 */
+  --md-surface: #1A2E22;
+  --md-surface-dim: #1A2E22;
+  --md-surface-container: #232F27;
+  --md-surface-container-low: #1A2E22;
+  --md-surface-container-high: #2D3B32;
+  --md-surface-container-highest: #3D4D42;
+  --md-on-surface: #DCE3DD;
+  --md-on-surface-variant: #C8D4CB;
+  --md-outline: #6B9B7A;
+  --md-outline-variant: #3D4D42;
 
   /* Background */
-  --md-background: #191C1C;
-  --md-on-background: #E1E3E1;
+  --md-background: #1A2E22;
+  --md-on-background: #DCE3DD;
 
   /* Elevation */
   --md-elevation-1: 0 1px 2px rgba(0, 0, 0, 0.6), 0 1px 3px 1px rgba(0, 0, 0, 0.4);
@@ -155,37 +155,37 @@
 
 /* Loom Theme Dark Mode for manual override */
 :root[data-theme="dark"] {
-  --loom-bg: #111314;
-  --loom-bg-warm: #1A1A18;
-  --loom-text: #E5E7EB;
-  --loom-text-secondary: #9CA3AF;
-  --loom-border: #374151;
-  --loom-card-hover: #1C2A22;
-  --hero-gradient-start: #1C2A22;
-  --hero-gradient-mid: #15251E;
-  --hero-gradient-end: #0F1F17;
+  --loom-bg: #1A2E22;
+  --loom-bg-warm: #232F27;
+  --loom-text: #DCE3DD;
+  --loom-text-secondary: #C8D4CB;
+  --loom-border: #3D4D42;
+  --loom-card-hover: #2D3B32;
+  --hero-gradient-start: #232F27;
+  --hero-gradient-mid: #1A2E22;
+  --hero-gradient-end: #1A2E22;
 }
 
 /* Dark Theme - System Preference */
 @media (prefers-color-scheme: dark) {
   :root {
-    /* Primary Colors */
-    --md-primary: #4DD9C0;
-    --md-on-primary: #003731;
-    --md-primary-container: #005048;
-    --md-on-primary-container: #9EF2E4;
+    /* Primary Colors - 低饱和度柔和绿 */
+    --md-primary: #7AAF8A;
+    --md-on-primary: #1A2E22;
+    --md-primary-container: #3D4D42;
+    --md-on-primary-container: #D0D9D3;
 
     /* Secondary Colors */
-    --md-secondary: #B1CCC6;
-    --md-on-secondary: #1C3531;
-    --md-secondary-container: #324B47;
-    --md-on-secondary-container: #C2E8E0;
+    --md-secondary: #7AAF8A;
+    --md-on-secondary: #1A2E22;
+    --md-secondary-container: #3D4D42;
+    --md-on-secondary-container: #D0D9D3;
 
     /* Tertiary Colors */
-    --md-tertiary: #A0CFCC;
-    --md-on-tertiary: #003735;
-    --md-tertiary-container: #1E4D4B;
-    --md-on-tertiary-container: #B8E4E0;
+    --md-tertiary: #6B9B7A;
+    --md-on-tertiary: #1A2E22;
+    --md-tertiary-container: #4D5D52;
+    --md-on-tertiary-container: #C8D4CB;
 
     /* Error Colors */
     --md-error: #F2B8B5;
@@ -193,21 +193,21 @@
     --md-error-container: #8C1D18;
     --md-on-error-container: #F9DEDC;
 
-    /* Surface Colors */
-    --md-surface: #191C1C;
-    --md-surface-dim: #111414;
-    --md-surface-container: #1D2120;
-    --md-surface-container-low: #171B1B;
-    --md-surface-container-high: #252A29;
-    --md-surface-container-highest: #303534;
-    --md-on-surface: #E1E3E1;
-    --md-on-surface-variant: #BEC9C5;
-    --md-outline: #899390;
-    --md-outline-variant: #3F4947;
+    /* Surface Colors - 低饱和度深灰绿底色 */
+    --md-surface: #1A2E22;
+    --md-surface-dim: #1A2E22;
+    --md-surface-container: #232F27;
+    --md-surface-container-low: #1A2E22;
+    --md-surface-container-high: #2D3B32;
+    --md-surface-container-highest: #3D4D42;
+    --md-on-surface: #DCE3DD;
+    --md-on-surface-variant: #C8D4CB;
+    --md-outline: #6B9B7A;
+    --md-outline-variant: #3D4D42;
 
     /* Background */
-    --md-background: #191C1C;
-    --md-on-background: #E1E3E1;
+    --md-background: #1A2E22;
+    --md-on-background: #DCE3DD;
 
     /* Elevation */
     --md-elevation-1: 0 1px 2px rgba(0, 0, 0, 0.6), 0 1px 3px 1px rgba(0, 0, 0, 0.4);
@@ -229,15 +229,15 @@
 
   /* Loom Theme Dark Mode */
   :root {
-    --loom-bg: #111314;
-    --loom-bg-warm: #1A1A18;
-    --loom-text: #E5E7EB;
-    --loom-text-secondary: #9CA3AF;
-    --loom-border: #374151;
-    --loom-card-hover: #1C2A22;
-    --hero-gradient-start: #1C2A22;
-    --hero-gradient-mid: #15251E;
-    --hero-gradient-end: #0F1F17;
+    --loom-bg: #1A2E22;
+    --loom-bg-warm: #232F27;
+    --loom-text: #DCE3DD;
+    --loom-text-secondary: #C8D4CB;
+    --loom-border: #3D4D42;
+    --loom-card-hover: #2D3B32;
+    --hero-gradient-start: #232F27;
+    --hero-gradient-mid: #1A2E22;
+    --hero-gradient-end: #1A2E22;
   }
 }
 
@@ -1565,6 +1565,11 @@ a:hover {
   resize: vertical;
 }
 
+.form-field input:hover,
+.form-field textarea:hover {
+  background: var(--md-surface-container);
+}
+
 .form-field input:focus,
 .form-field textarea:focus {
   outline: none;
@@ -1739,15 +1744,15 @@ a:hover {
 
 :root {
   /* Loom Green Theme */
-  --loom-primary: #4ADE80;
-  --loom-primary-dark: #22C55E;
-  --loom-primary-light: #86EFAC;
+  --loom-primary: #6B9B7A;
+  --loom-primary-dark: #5A8A69;
+  --loom-primary-light: #C8D4CB;
   --loom-bg: #FAFAFA;
   --loom-bg-warm: #F5F5F0;
   --loom-text: #1F2937;
   --loom-text-secondary: #6B7280;
   --loom-border: #E5E7EB;
-  --loom-card-hover: #F0FDF4;
+  --loom-card-hover: #E8EDE9;
   
   /* Hero Gradient */
   --hero-gradient-start: #ECFDF5;
