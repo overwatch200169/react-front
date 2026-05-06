@@ -122,7 +122,7 @@ const EggPage = () => {
                 }))}
                 angleField="value"
                 colorField="type"
-                radius={0.8}
+                radius={0.9}
                 innerRadius={0.4}
                 height={700}
                 marginTop={50}
@@ -133,6 +133,13 @@ const EggPage = () => {
                   
                   text: (d) => `${d.type}\n ${d.value}张\n ${d.percent.toFixed(2)}%`,
                   position: 'spider',
+                  transform: [
+                    {
+                      type: 'overlapDodgeY',
+                      padding: 30,
+                      maxIterations: 50
+                    }
+                  ],
                   style: {
                     fontWeight: 'bold',
                   },
