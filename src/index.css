@@ -865,6 +865,19 @@ a:hover {
   margin-top: 4px;
 }
 
+.author-meta-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.author-meta-group .author-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
 @media (max-width: 768px) {
   .author-profile-card {
     flex-direction: column;

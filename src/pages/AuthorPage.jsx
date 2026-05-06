@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { getUserById, getUserProfile, getArticlesByUser } from '../services/api'
-import { CalendarOutlined, UserOutlined } from '@ant-design/icons'
+import { CalendarOutlined, UserOutlined, GiftOutlined, FileTextOutlined } from '@ant-design/icons'
 
 const AuthorPage = () => {
   const { id } = useParams()
@@ -89,9 +89,18 @@ const AuthorPage = () => {
         </div>
         <div className="author-info">
           <h1 className="author-name">{user?.username || '未知用户'}</h1>
-          {profile?.bio && <p className="author-bio">{profile.bio}</p>}
-          {profile?.age && <p className="author-meta">年龄：{profile.age}</p>}
-          <p className="author-meta">文章数：{articles.length} 篇</p>
+          <p className="author-bio">{profile?.bio || '暂无简介'}</p>
+          <div className="author-meta-group">
+            <span className="author-meta">
+              <GiftOutlined /> 生日：{profile?.birthday ? formatDate(profile.birthday) : '保密'}
+            </span>
+            <span className="author-meta">
+              <CalendarOutlined /> 年龄：{profile?.age ?? '保密'}
+            </span>
+            <span className="author-meta">
+              <FileTextOutlined /> 文章数：{articles.length} 篇
+            </span>
+          </div>
         </div>
       </div>
 
