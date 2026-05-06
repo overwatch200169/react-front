@@ -5,6 +5,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'MiSans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 :root {
@@ -1633,6 +1634,17 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+.captcha-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 40px;
+  background: var(--md-surface-container-high);
+  border-radius: var(--md-shape-medium);
+  margin-left: 12px;
 }
 
 .captcha-input-wrapper {

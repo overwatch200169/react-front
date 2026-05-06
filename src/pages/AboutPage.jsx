@@ -111,7 +111,10 @@ const AboutPage = () => {
           <div className="email-overlay">
             <div className="email-overlay-content">
               {!submitResult ? (
-                <Spin size="large" indicator={<span style={{ fontSize: 16, color: 'var(--md-primary)' }}>邮件发送中...</span>} />
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                  <Spin size="large" />
+                  <span style={{ fontSize: 16, color: 'var(--md-on-surface)' }}>邮件发送中...</span>
+                </div>
               ) : (
                 <Result
                   icon={submitResult.success ? <CheckCircleOutlined style={{ color: '#52c41a' }} /> : <CloseCircleOutlined style={{ color: '#ff4d4f' }} />}
@@ -206,7 +209,9 @@ const AboutPage = () => {
                 style={{ width: 200 }}
               />
               {captchaLoading ? (
-                <Spin indicator={<LoadingOutlined style={{ fontSize: 24, marginLeft: 12, color: 'var(--md-primary)' }} spin />} />
+                <div className="captcha-loading">
+                  <Spin size="small" />
+                </div>
               ) : captchaImage ? (
                 <img
                   className="captcha-image"
