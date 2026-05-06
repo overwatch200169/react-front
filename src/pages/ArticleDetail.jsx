@@ -17,6 +17,11 @@ const ArticleDetail = () => {
     fetchArticle()
   }, [id])
 
+  // 页面加载时滚动到顶部
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [id])
+
   const fetchArticle = async () => {
     try {
       setLoading(true)
