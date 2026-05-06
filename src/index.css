@@ -2089,22 +2089,51 @@ body {
   }
   
   .article-card-minimal {
-    padding: 20px 20px;
-    flex-direction: column;
+    padding: 16px 0;
+    flex-direction: row;
     align-items: flex-start;
-    gap: 8px;
+    gap: 16px;
+    border-radius: 0;
   }
   
   .article-card-minimal:hover {
-    padding-left: 20px;
+    padding-left: 0;
+  }
+  
+  .article-card-left {
+    flex: 1;
+    min-width: 0;
+    flex-direction: column;
+    gap: 4px;
   }
   
   .article-card-title {
-    font-size: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .article-card-tags {
+    gap: 4px;
+  }
+  
+  .article-tag {
+    padding: 2px 8px;
+    font-size: 0.7rem;
   }
   
   .article-card-date {
     font-size: 0.75rem;
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+  
+  .article-card-right {
+    flex-shrink: 0;
+    align-items: flex-end;
+    gap: 2px;
   }
 
   /* 非首页容器移动端适配 */
@@ -2122,15 +2151,26 @@ body {
   .container .articles-grid {
     border-radius: 8px;
     margin: 0;
+    gap: 1px;
   }
 
   .container .article-card-minimal {
-    padding: 16px 20px;
+    padding: 16px 0;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 16px;
     border-radius: 0;
   }
 
   .container .article-card-minimal:hover {
-    padding-left: 20px;
+    padding-left: 0;
+  }
+
+  .container .article-card-title {
+    font-size: 0.95rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   /* 移动端时间线容器边距 */
