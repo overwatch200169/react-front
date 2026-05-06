@@ -1686,6 +1686,42 @@ body {
   flex-shrink: 0;
 }
 
+.article-card-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.article-card-author {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--loom-primary-dark);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.article-card-author:hover {
+  color: var(--loom-primary);
+  text-decoration: underline;
+}
+
+/* Article Detail Author */
+.article-detail-author {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--loom-text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.article-detail-author:hover {
+  color: var(--loom-primary-dark);
+  text-decoration: underline;
+}
+
 /* Empty State */
 .empty-state {
   text-align: center;

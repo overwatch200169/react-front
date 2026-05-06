@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams, Link } from 'react-router-dom'
 import { searchArticles, getArticles, getUserById } from '../services/api'
 import { DownOutlined } from '@ant-design/icons'
 import TimelineSidebar from '../components/TimelineSidebar'
@@ -179,7 +179,18 @@ const ArticleList = () => {
                               </div>
                             )}
                           </div>
-                          <span className="article-card-date">{formatDate(article.create_time)}</span>
+                          <div className="article-card-right">
+                            {article.author_id && (
+                              <Link 
+                                to={`/author/${article.author_id}`} 
+                                className="article-card-author"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                {authorNames[article.author_id] || '加载中...'}
+                              </Link>
+                            )}
+                            <span className="article-card-date">{formatDate(article.create_time)}</span>
+                          </div>
                         </div>
                         )
                       })}
@@ -300,7 +311,18 @@ const ArticleList = () => {
                   </div>
                 )}
               </div>
-              <span className="article-card-date">{formatDate(article.create_time)}</span>
+              <div className="article-card-right">
+                {article.author_id && (
+                  <Link 
+                    to={`/author/${article.author_id}`} 
+                    className="article-card-author"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {authorNames[article.author_id] || '加载中...'}
+                  </Link>
+                )}
+                <span className="article-card-date">{formatDate(article.create_time)}</span>
+              </div>
             </div>
             )
           })}

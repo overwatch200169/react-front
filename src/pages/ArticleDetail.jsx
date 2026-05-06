@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
-import { getArticleById } from '../services/api'
+import { getArticleById, getUserById } from '../services/api'
 import { CalendarOutlined, UserOutlined } from '@ant-design/icons'
 
 const ArticleDetail = () => {
   const { id } = useParams()
   const navigate = useNavigate()
   const [article, setArticle] = useState(null)
+  const [author, setAuthor] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
@@ -21,6 +22,17 @@ const ArticleDetail = () => {
       setLoading(true)
       const data = await getArticleById(id)
       setArticle(data)
+      
+      // 获取作者信息
+      if (data?.author_id) {
+        try {
+          const authorData = await getUserById(data.author_id)
+          setAuthor(authorData)
+        } catch (e) {
+          // 作者信息获取失败不影响文章显示
+        }
+      }
+      
       setError(null)
     } catch (err) {
       setError('加载文章失败，请稍后重试')
@@ -79,7 +91,11 @@ const ArticleDetail = () => {
           <h1 className="article-detail-title">{article.title}</h1>
           <div className="article-detail-meta">
             <span><CalendarOutlined /> {formatDate(article.create_time)}</span>
-            <span><UserOutlined /> 作者</span>
+            {article.author_id && (
+              <Link to={`/author/${article.author_id}`} className="article-detail-author">
+                <UserOutlined /> {author?.username || '加载中...'}
+              </Link>
+            )}
           </div>
           {article.tags && (
             <div className="article-detail-tags">
