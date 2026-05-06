@@ -23,15 +23,15 @@ const Layout = ({ children }) => {
       <main className="main">
         {showSidebar ? (
           <>
-            {/* 桌面端布局 */}
-            {location.pathname !== '/' && (
+            {/* 桌面端布局 - 只用于标签详情页 */}
+            {location.pathname !== '/' && location.pathname.startsWith('/tags/') && (
               <div className="desktop-layout">
                 <div className="main-content">{children}</div>
                 <TimelineSidebar />
               </div>
             )}
-            {/* 首页直接渲染 children */}
-            {location.pathname === '/' && children}
+            {/* 首页和作者页面直接渲染 children */}
+            {(location.pathname === '/' || location.pathname.startsWith('/author/')) && children}
           </>
         ) : (
           children
