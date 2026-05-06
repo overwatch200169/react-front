@@ -89,7 +89,7 @@ const AuthorPage = () => {
   }
 
   return (
-    <div className="container">
+    <div className="container author-page">
       <div className="author-profile-card">
         <div className="author-avatar-large">
           {profile?.avatar_url ? (
