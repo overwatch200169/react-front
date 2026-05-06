@@ -12,8 +12,12 @@ import EggPage from './pages/EggPage'
 // 页面布局组件
 const Layout = ({ children }) => {
   const location = useLocation()
-  // 在文章详情页隐藏侧边栏
-  const showSidebar = !location.pathname.startsWith('/article/')
+  // 在文章详情页、首页Hero区、标签页、关于页面、彩蛋页面隐藏侧边栏
+  const showSidebar = !location.pathname.startsWith('/article/') 
+    && !location.pathname.startsWith('/tags')
+    && location.pathname !== '/about'
+    && location.pathname !== '/'
+    && location.pathname !== '/egg'
 
   return (
     <>

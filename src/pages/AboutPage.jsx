@@ -83,16 +83,13 @@ const AboutPage = () => {
 
   const defaultProfile = {
     bio: '一名热爱技术的开发者，专注于Web开发领域。喜欢探索新技术，分享学习心得。在这个博客中，我会记录工作中的点点滴滴，希望能与志同道合的朋友共同成长。',
-    skills: ['React', 'Python', 'Docker', 'Redis', 'Git']
+    skills: ['React', 'Python', 'Docker', 'Redis', 'Git', '绘画？', '摄影？']
   }
 
   const displayProfile = profile || defaultProfile
 
   return (
-    <div className="container" style={{ position: 'relative' }}>
-      <Link to="/egg" className="egg-entrance" title="彩蛋">
-        <CoffeeOutlined />
-      </Link>
+    <div className="container">
       <div className="about-content">
         <div className="about-header">
           <div className="about-avatar"><UserOutlined /></div>
@@ -108,13 +105,19 @@ const AboutPage = () => {
         </div>
         
         <div className="about-section">
-          <h2>🛠 技术栈</h2>
+          <h2><ToolOutlined /> 技术栈</h2>
           <div className="skills-grid">
             {(profile?.skills || defaultProfile.skills).map((skill, index) => (
               <div key={index} className="skill-item">
                 {skill}
               </div>
             ))}
+          </div>
+          <div className="egg-hint">
+            <Link to="/egg" className="egg-link" title="彩蛋">
+              <CoffeeOutlined />
+            </Link>
+            <span>好奇？</span>
           </div>
         </div>
         
