@@ -26,15 +26,8 @@ const Header = () => {
   const handleHomeClick = (e) => {
     e.preventDefault()
     navigate('/')
-    // 滚动到文章列表区域
-    setTimeout(() => {
-      const contentSection = document.getElementById('articles-section')
-      if (contentSection) {
-        contentSection.scrollIntoView({ behavior: 'smooth' })
-      } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-      }
-    }, 100)
+    // 滚动到 Hero 区域（页面顶部）
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   return (

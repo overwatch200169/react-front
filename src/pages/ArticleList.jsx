@@ -217,13 +217,26 @@ const ArticleList = () => {
   // 非首页（搜索/筛选结果）保持原有样式
   const isSearchResult = searchQuery || dateYearMonth || tag
 
+  const handleBackToList = () => {
+    navigate('/')
+    // 滚动到文章列表区域
+    setTimeout(() => {
+      const contentSection = document.getElementById('articles-section')
+      if (contentSection) {
+        contentSection.scrollIntoView({ behavior: 'smooth' })
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      }
+    }, 100)
+  }
+
   return (
     <div className="container">
       <div className="page-header">
         {isSearchResult && (
           <button 
             className="back-to-list-btn"
-            onClick={() => navigate('/')}
+            onClick={handleBackToList}
           >
             ← 返回文章列表
           </button>

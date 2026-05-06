@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { getArticleById } from '../services/api'
@@ -7,6 +7,7 @@ import { CalendarOutlined, UserOutlined } from '@ant-design/icons'
 
 const ArticleDetail = () => {
   const { id } = useParams()
+  const navigate = useNavigate()
   const [article, setArticle] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -93,9 +94,22 @@ const ArticleDetail = () => {
         </div>
         
         <div style={{ marginTop: '48px', paddingTop: '24px', borderTop: '1px solid var(--border-color)' }}>
-          <Link to="/" className="back-button">
+          <button 
+            className="back-button"
+            onClick={() => {
+              navigate('/')
+              setTimeout(() => {
+                const contentSection = document.getElementById('articles-section')
+                if (contentSection) {
+                  contentSection.scrollIntoView({ behavior: 'smooth' })
+                } else {
+                  window.scrollTo({ top: 0, behavior: 'smooth' })
+                }
+              }, 100)
+            }}
+          >
             ← 返回文章列表
-          </Link>
+          </button>
         </div>
       </article>
     </div>
