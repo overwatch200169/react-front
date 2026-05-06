@@ -32,7 +32,12 @@ const ArticleDetail = () => {
   const formatDate = (dateString) => {
     if (!dateString) return ''
     const date = new Date(dateString)
-    return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`
+    return date.toLocaleDateString('zh-CN', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
+    })
   }
 
   if (loading) {

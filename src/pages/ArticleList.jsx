@@ -75,7 +75,12 @@ const ArticleList = () => {
   const formatDate = (dateString) => {
     if (!dateString) return ''
     const date = new Date(dateString)
-    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
+    return date.toLocaleDateString('zh-CN', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone // 自动使用本地时区
+    }).replace(/\//g, '-')
   }
 
   const scrollToContent = () => {
