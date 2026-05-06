@@ -1024,6 +1024,17 @@ a:hover {
   .mobile-timeline-container {
     padding: 0;
   }
+
+  /* 移动端时间线显示 */
+  .mobile-timeline-container .timeline-sidebar {
+    display: block;
+    width: 100%;
+    position: static;
+    max-height: none;
+    border: none;
+    border-radius: 8px;
+    background: white;
+  }
 }
 
 /* ========== Author ========== */
@@ -1109,14 +1120,81 @@ a:hover {
   .author-profile-card {
     flex-direction: column;
     text-align: center;
+    padding: 24px;
+    gap: 20px;
+  }
+
+  .author-avatar-large {
+    width: 100px;
+    height: 100px;
+    font-size: 40px;
+  }
+
+  .author-info {
+    width: 100%;
+  }
+
+  .author-name {
+    font-size: var(--md-headline-small);
+  }
+
+  .author-bio {
+    font-size: var(--md-body-medium);
+  }
+
+  .author-meta-group {
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .author-meta {
+    font-size: var(--md-body-small);
+  }
+
+  /* 作者页面文章列表 */
+  .author-page-articles {
+    padding: 0;
+  }
+
+  .article-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .article-card {
+    padding: 16px;
+    border-radius: var(--md-shape-large);
+  }
+
+  .article-card-header {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .article-title {
+    font-size: var(--md-title-medium);
+  }
+
+  .article-meta {
+    font-size: var(--md-body-small);
+  }
+
+  .article-tags {
+    margin-top: 12px;
+  }
+
+  .tag {
+    padding: 4px 10px;
+    font-size: var(--md-label-small);
   }
 }
 
 /* ========== Timeline Sidebar ========== */
 .timeline-sidebar {
   width: 280px;
-  background: white;
-  border: 1px solid var(--loom-border);
+  background: var(--md-surface);
+  border: 1px solid var(--md-outline-variant);
   border-radius: 12px;
   padding: 20px;
   position: sticky;
@@ -1291,7 +1369,7 @@ a:hover {
 }
 
 @media (max-width: 768px) {
-  .timeline-sidebar {
+  .layout-with-sidebar .timeline-sidebar {
     display: none;
   }
 }
@@ -1821,10 +1899,10 @@ body {
 .articles-layout {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 auto;
   display: flex;
   gap: 48px;
-  align-items: flex-start;
+  /* align-items: ; */
 }
 
 .articles-main {
@@ -1992,7 +2070,7 @@ body {
   }
   
   .articles-layout {
-    padding: 0;
+    padding: 0 24px;
     flex-direction: column;
   }
   
@@ -2006,19 +2084,19 @@ body {
   }
   
   .articles-grid {
-    border-radius: 0;
-    gap: 0;
+    border-radius: 8px;
+    gap: 1px;
   }
   
   .article-card-minimal {
-    padding: 20px 16px;
+    padding: 20px 20px;
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
   }
   
   .article-card-minimal:hover {
-    padding-left: 16px;
+    padding-left: 20px;
   }
   
   .article-card-title {
@@ -2031,27 +2109,101 @@ body {
 
   /* 非首页容器移动端适配 */
   .container {
-    padding: 0 16px;
+    padding: 0 24px;
   }
 
   .container .page-header {
-    padding: 32px 16px;
+    padding: 32px 24px;
+    margin: 0 -24px;
     border-radius: 0;
+    width: calc(100% + 48px);
   }
 
   .container .articles-grid {
-    border-radius: 0;
-    margin: 0 -16px;
-    width: calc(100% + 32px);
+    border-radius: 8px;
+    margin: 0;
   }
 
   .container .article-card-minimal {
-    padding: 16px;
+    padding: 16px 20px;
     border-radius: 0;
   }
 
   .container .article-card-minimal:hover {
-    padding-left: 16px;
+    padding-left: 20px;
+  }
+
+  /* 移动端时间线容器边距 */
+  .mobile-timeline-container {
+    padding: 0 24px;
+  }
+
+  .mobile-timeline-container .timeline-sidebar {
+    width: 100%;
+  }
+
+  /* 作者页面移动端适配 */
+  .author-profile-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+    gap: 16px;
+    border-radius: var(--md-shape-large);
+  }
+
+  .author-avatar-large {
+    width: 80px;
+    height: 80px;
+    font-size: 32px;
+  }
+
+  .author-name {
+    font-size: var(--md-title-large);
+    margin-bottom: 8px;
+  }
+
+  .author-bio {
+    font-size: var(--md-body-medium);
+    margin-bottom: 12px;
+  }
+
+  .author-meta-group {
+    justify-content: center;
+    gap: 8px;
+    font-size: var(--md-body-small);
+  }
+
+  .author-meta {
+    font-size: var(--md-label-small);
+  }
+
+  .author-page .page-header {
+    padding: 24px 24px;
+    margin: 24px -24px 0;
+    border-radius: 0;
+    width: calc(100% + 48px);
+  }
+
+  .author-page .page-header .page-title {
+    font-size: 1.25rem;
+  }
+
+  .author-page .article-list {
+    padding: 0;
+  }
+
+  .author-page .article-card {
+    padding: 16px;
+    border-radius: var(--md-shape-medium);
+  }
+
+  .author-page .article-title {
+    font-size: 1rem;
+  }
+
+  .author-page .back-button {
+    width: calc(100% - 48px);
+    margin: 0 24px;
   }
 }
 
