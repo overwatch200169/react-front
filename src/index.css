@@ -127,6 +127,17 @@ a:hover {
   position: sticky;
   top: 0;
   z-index: 100;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.header-hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+.header-visible {
+  transform: translateY(0);
+  opacity: 1;
 }
 
 .header-content {
@@ -1341,4 +1352,309 @@ a:hover {
 
 .egg-entrance:hover {
   transform: scale(1.2);
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin: -24px -24px 40px -24px;
+}
+
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  z-index: -1;
+}
+
+.hero-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=80') center/cover;
+  opacity: 0.4;
+}
+
+.hero-background::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent 60%, rgba(255, 255, 255, 1) 100%);
+}
+
+.hero-content {
+  text-align: center;
+  z-index: 1;
+  padding: 0 20px;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 16px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  letter-spacing: 2px;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 32px;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.hero-scroll-hint {
+  position: absolute;
+  bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.8);
+  transition: color 0.3s ease;
+  z-index: 1;
+}
+
+.hero-scroll-hint:hover {
+  color: #ffffff;
+}
+
+.hero-scroll-hint span {
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+
+.scroll-arrow {
+  font-size: 1.5rem;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(10px);
+  }
+  60% {
+    transform: translateY(5px);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .hero {
+    min-height: 500px;
+  }
+}
+
+/* Hero 与文章列表切换动画 */
+.view-container {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hero 区域 */
+.hero-section {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero-visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.hero-hidden {
+  transform: translateY(-30px);
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+}
+
+/* 文章列表区域 */
+.page-content {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.content-visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.content-hidden {
+  transform: translateY(30px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 切换指示器按钮悬停效果 */
+.scroll-indicator:hover {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* 返回顶部按钮悬停效果 */
+.back-to-hero-button:hover {
+  transform: translateX(-50%) scale(1.05);
+  box-shadow: 0 6px 25px rgba(102, 126, 234, 0.5);
+}
+
+/* 动画中禁止交互 */
+.view-container.animating {
+  pointer-events: none;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .hero-hidden {
+    transform: translateY(-20px);
+  }
+  
+  .content-hidden {
+    transform: translateY(20px);
+  }
+}
+
+/* 全屏模式 - Hero 视图时隐藏侧边栏 */
+.main.fullscreen-mode .layout-with-sidebar {
+  display: block;
+}
+
+.main.fullscreen-mode .layout-with-sidebar .main-content {
+  width: 100%;
+  max-width: 100%;
+}
+
+.main.fullscreen-mode .layout-with-sidebar .sidebar-hidden {
+  display: none;
+}
+
+/* 全屏模式下隐藏 Footer */
+.main.fullscreen-mode ~ .footer,
+.footer.footer-hidden {
+  display: none;
+}
+
+/* Hero 全屏样式 */
+.hero-section.hero-fullscreen.hero-visible {
+  width: 100vw;
+  position: relative;
+  z-index: 10;
+}
+
+.hero-section.hero-fullscreen.hero-visible > div {
+  border-radius: 0;
+}
+
+/* Hero 隐藏时的动画 */
+.hero-section.hero-fullscreen.hero-hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+/* 确保容器不限制 Hero 宽度 */
+.container {
+  max-width: 100%;
+  padding: 0;
+}
+
+.container .hero-section {
+  margin-left: 0;
+  width: 100%;
+}
+
+/* ========== 首页文章列表滚动容器 ========== */
+.articles-wrapper {
+  position: relative;
+  min-height: 100vh;
+}
+
+.articles-container {
+  height: calc(100vh - 64px);
+  overflow-y: auto;
+  padding-top: 24px;
+}
+
+.articles-container .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px 100px;
+}
+
+/* 首页返回 Hero 按钮 */
+.back-to-hero-button {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.back-to-hero-button:hover {
+  transform: translateX(-50%) scale(1.05);
+  box-shadow: 0 6px 25px rgba(102, 126, 234, 0.5);
+}
+
+/* ========== Hero 页面 ========== */
+.hero-page {
+  min-height: 100vh;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+}
+
+/* ========== Hero 页面全屏样式 ========== */
+.hero-section.hero-fullscreen.hero-visible {
+  width: 100vw;
+  position: relative;
+  z-index: 10;
+}
+
+.hero-section.hero-fullscreen.hero-visible > div {
+  border-radius: 0;
+}
+
+/* Hero 隐藏时的动画 */
+.hero-section.hero-fullscreen.hero-hidden {
+  transform: translateY(-100%);
+  opacity: 0;
 }
