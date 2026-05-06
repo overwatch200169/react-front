@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Table } from 'antd'
 import { getEgg } from '../services/api'
+import { CoffeeOutlined } from '@ant-design/icons'
 
 const EggPage = () => {
   const [eggList, setEggList] = useState([])
@@ -36,20 +37,20 @@ const EggPage = () => {
 
   const columns = [
     {
-      title: '姓名',
+      
       dataIndex: 'name',
       key: 'name',
       align: 'center'
     },
     {
-      title: '生日',
+      
       dataIndex: 'birthday',
       key: 'birthday',
       align: 'center',
       render: (text) => formatDate(text)
     },
     {
-      title: '主页',
+      
       dataIndex: 'homepage',
       key: 'homepage',
       align: 'center',
@@ -61,7 +62,7 @@ const EggPage = () => {
       ) : '-'
     },
     {
-      title: '头像',
+      
       dataIndex: 'picture_url',
       key: 'picture_url',
       align: 'center',
@@ -87,7 +88,7 @@ const EggPage = () => {
     <div className="container">
       <div className="about-content">
         <div className="about-section">
-          <h2>🥚 彩蛋</h2>
+          <h2><CoffeeOutlined /> 彩蛋</h2>
           <Table
             columns={columns}
             dataSource={tableData}

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { getUserById, getUserProfile, getArticlesByUser } from '../services/api'
+import { CalendarOutlined, UserOutlined } from '@ant-design/icons'
 
 const AuthorPage = () => {
   const { id } = useParams()
@@ -78,7 +79,7 @@ const AuthorPage = () => {
           {profile?.avatar_url ? (
             <img src={profile.avatar_url} alt={user?.username} />
           ) : (
-            '👤'
+            <UserOutlined />
           )}
         </div>
         <div className="author-info">
@@ -109,7 +110,7 @@ const AuthorPage = () => {
                 <div>
                   <h2 className="article-title">{article.title}</h2>
                   <div className="article-meta">
-                    <span>📅 {formatDate(article.create_time)}</span>
+                    <span><CalendarOutlined /> {formatDate(article.create_time)}</span>
                   </div>
                 </div>
               </div>

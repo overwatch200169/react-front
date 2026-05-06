@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { FileTextOutlined, SearchOutlined } from '@ant-design/icons'
 
 const Header = () => {
   const location = useLocation()
@@ -26,7 +27,7 @@ const Header = () => {
     <header className="header">
       <div className="header-content">
         <Link to="/" className="logo">
-          <span className="logo-icon">📝</span>
+          <span className="logo-icon"><FileTextOutlined /></span>
           <span>我的博客</span>
         </Link>
 
@@ -39,7 +40,7 @@ const Header = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
           <button type="submit" className="search-button">
-            🔍
+            <SearchOutlined />
           </button>
         </form>
 

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { getMonthlyAggregation } from '../services/api'
+import { CalendarOutlined } from '@ant-design/icons'
 
 const TimelineSidebar = () => {
   const [monthlyData, setMonthlyData] = useState([])
@@ -55,7 +56,7 @@ const TimelineSidebar = () => {
     return (
       <aside className="timeline-sidebar">
         <div className="timeline-header">
-          <span className="timeline-icon">📅</span>
+          <span className="timeline-icon"><CalendarOutlined /></span>
           <h3>文章归档</h3>
           <button className="timeline-toggle" onClick={() => setCollapsed(!collapsed)}>
             {collapsed ? '▼' : '▲'}
@@ -74,7 +75,7 @@ const TimelineSidebar = () => {
     return (
       <aside className="timeline-sidebar">
         <div className="timeline-header">
-          <span className="timeline-icon">📅</span>
+          <span className="timeline-icon"><CalendarOutlined /></span>
           <h3>文章归档</h3>
           <button className="timeline-toggle" onClick={() => setCollapsed(!collapsed)}>
             {collapsed ? '▼' : '▲'}
@@ -91,7 +92,7 @@ const TimelineSidebar = () => {
     return (
       <aside className="timeline-sidebar">
         <div className="timeline-header">
-          <span className="timeline-icon">📅</span>
+          <span className="timeline-icon"><CalendarOutlined /></span>
           <h3>文章归档</h3>
           <button className="timeline-toggle" onClick={() => setCollapsed(!collapsed)}>
             {collapsed ? '▼' : '▲'}
@@ -109,7 +110,7 @@ const TimelineSidebar = () => {
   return (
     <aside className={`timeline-sidebar ${collapsed ? 'collapsed' : ''}`}>
       <div className="timeline-header">
-        <span className="timeline-icon">📅</span>
+        <span className="timeline-icon"><CalendarOutlined /></span>
         <h3>文章归档</h3>
         <button className="timeline-toggle" onClick={() => setCollapsed(!collapsed)}>
           {collapsed ? '▼' : '▲'}

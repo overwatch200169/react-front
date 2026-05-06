@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { searchArticles, getArticles, getUserById } from '../services/api'
+import { CalendarOutlined, UserOutlined } from '@ant-design/icons'
 
 const ArticleList = () => {
   const [articles, setArticles] = useState([])
@@ -230,10 +231,10 @@ const ArticleList = () => {
                 <div>
                   <h2 className="article-title">{article.title}</h2>
                   <div className="article-meta">
-                    <span>📅 {formatDate(article.create_time)}</span>
-                    {article.author_id && (
-                      <span>
-                        👤 
+<span><CalendarOutlined /> {formatDate(article.create_time)}</span>
+                          {article.author_id && (
+                            <span>
+                              <UserOutlined />
                         <Link 
                           to={`/author/${article.author_id}`} 
                           className="author-link"

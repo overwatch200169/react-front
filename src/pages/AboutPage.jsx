@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Input, Button, message } from 'antd'
+import { UserOutlined, BookOutlined, ToolOutlined, MailOutlined, CoffeeOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import { getUserProfile, getCaptcha, sendContactEmail } from '../services/api'
 
@@ -90,11 +91,11 @@ const AboutPage = () => {
   return (
     <div className="container" style={{ position: 'relative' }}>
       <Link to="/egg" className="egg-entrance" title="彩蛋">
-        🥚
+        <CoffeeOutlined />
       </Link>
       <div className="about-content">
         <div className="about-header">
-          <div className="about-avatar">👨‍💻</div>
+          <div className="about-avatar"><UserOutlined /></div>
           <div className="about-info">
             <h1>关于我</h1>
             <p>热爱技术，享受代码带来的乐趣</p>
@@ -102,7 +103,7 @@ const AboutPage = () => {
         </div>
         
         <div className="about-section">
-          <h2>📖 个人简介</h2>
+          <h2><BookOutlined /> 个人简介</h2>
           <p>{displayProfile.bio || defaultProfile.bio}</p>
         </div>
         
@@ -118,7 +119,7 @@ const AboutPage = () => {
         </div>
         
         <div className="about-section">
-          <h2>📬 联系我</h2>
+          <h2><MailOutlined /> 联系我</h2>
           <p className="contact-intro">有任何问题或建议，欢迎给我发送邮件！</p>
           
           <div className="contact-form">

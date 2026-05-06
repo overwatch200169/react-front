@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { getArticleById } from '../services/api'
+import { CalendarOutlined, UserOutlined } from '@ant-design/icons'
 
 const ArticleDetail = () => {
   const { id } = useParams()
@@ -71,8 +72,8 @@ const ArticleDetail = () => {
         <div className="article-detail-header">
           <h1 className="article-detail-title">{article.title}</h1>
           <div className="article-detail-meta">
-            <span>📅 {formatDate(article.create_time)}</span>
-            <span>👤 作者</span>
+            <span><CalendarOutlined /> {formatDate(article.create_time)}</span>
+            <span><UserOutlined /> 作者</span>
           </div>
           {article.tags && (
             <div className="article-detail-tags">
