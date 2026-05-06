@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Input, Button, message } from 'antd'
+import { Input, Button, message, Result, Spin, LoadingOutlined } from 'antd'
+import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import { UserOutlined, BookOutlined, ToolOutlined, MailOutlined, CoffeeOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import { getUserProfile, getCaptcha, sendContactEmail } from '../services/api'
@@ -18,6 +19,9 @@ const AboutPage = () => {
     captcha_code: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showOverlay, setShowOverlay] = useState(false)
+  const [submitResult, setSubmitResult] = useState(null)
+  const [captchaLoading, setCaptchaLoading] = useState(false)
 
   useEffect(() => {
     fetchProfile()
@@ -38,6 +42,7 @@ const AboutPage = () => {
   }
 
   const fetchNewCaptcha = async () => {
+    setCaptchaLoading(true)
     try {
       const result = await getCaptcha()
       if (result.captcha_id) {
@@ -48,6 +53,8 @@ const AboutPage = () => {
       }
     } catch (err) {
       console.error('获取验证码失败:', err)
+    } finally {
+      setCaptchaLoading(false)
     }
   }
 
@@ -62,23 +69,30 @@ const AboutPage = () => {
       return
     }
 
+    setShowOverlay(true)
+    setSubmitResult(null)
+
     try {
       setIsSubmitting(true)
-      await sendContactEmail({
+      const response = await sendContactEmail({
         sender_name: formData.sender_name || null,
         sender_email: formData.sender_email,
         mail_text: formData.mail_text,
         captcha_id: captchaId,
         captcha_code: formData.captcha_code
       })
-      message.success('邮件发送成功！')
+      setSubmitResult({ success: true, message: response?.message || '邮件发送成功！' })
       setFormData({ sender_name: '', sender_email: '', mail_text: '', captcha_code: '' })
       fetchNewCaptcha()
     } catch (err) {
-      message.error(err.response?.data?.message || '发送失败，请重试')
+      setSubmitResult({ success: false, message: err.response?.data?.message || '发送失败，请重试' })
       fetchNewCaptcha()
     } finally {
       setIsSubmitting(false)
+      setTimeout(() => {
+        setShowOverlay(false)
+        setSubmitResult(null)
+      }, 3000)
     }
   }
 
@@ -92,6 +106,22 @@ const AboutPage = () => {
   return (
     <div className="container">
       <div className="about-content">
+        {/* 悬浮加载和结果层 */}
+        {showOverlay && (
+          <div className="email-overlay">
+            <div className="email-overlay-content">
+              {!submitResult ? (
+                <Spin size="large" indicator={<span style={{ fontSize: 16, color: 'var(--md-primary)' }}>邮件发送中...</span>} />
+              ) : (
+                <Result
+                  icon={submitResult.success ? <CheckCircleOutlined style={{ color: '#52c41a' }} /> : <CloseCircleOutlined style={{ color: '#ff4d4f' }} />}
+                  title={submitResult.success ? '发送成功' : '发送失败'}
+                  subTitle={submitResult.message}
+                />
+              )}
+            </div>
+          </div>
+        )}
         <div className="about-header">
           <div className="about-avatar"><UserOutlined /></div>
           <div className="about-info">
@@ -175,7 +205,9 @@ const AboutPage = () => {
                 disabled={isSubmitting}
                 style={{ width: 200 }}
               />
-              {captchaImage && (
+              {captchaLoading ? (
+                <Spin indicator={<LoadingOutlined style={{ fontSize: 24, marginLeft: 12, color: 'var(--md-primary)' }} spin />} />
+              ) : captchaImage ? (
                 <img
                   className="captcha-image"
                   src={captchaImage}
@@ -184,7 +216,7 @@ const AboutPage = () => {
                   title="点击刷新验证码"
                   style={{ cursor: 'pointer', marginLeft: 12 }}
                 />
-              )}
+              ) : null}
             </div>
             
             <Button 

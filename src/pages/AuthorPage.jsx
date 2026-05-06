@@ -165,8 +165,8 @@ const AuthorPage = () => {
       )}
 
       <div style={{ marginTop: '48px', textAlign: 'center' }}>
-        <button onClick={() => navigate('/')} className="back-button">
-          ← 返回首页
+        <button onClick={() => { navigate('/'); setTimeout(() => { const contentSection = document.getElementById('articles-section'); if (contentSection) { contentSection.scrollIntoView({ behavior: 'smooth' }); } else { window.scrollTo({ top: 0, behavior: 'smooth' }); } }, 100); }} className="back-to-list-btn">
+          ← 返回文章列表
         </button>
       </div>
     </div>
