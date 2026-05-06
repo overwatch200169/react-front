@@ -14,6 +14,7 @@ const AuthorPage = () => {
 
   useEffect(() => {
     fetchAuthorData()
+    window.scrollTo(0, 0)
   }, [id])
 
   const fetchAuthorData = async () => {

@@ -22,6 +22,7 @@ const AboutPage = () => {
   useEffect(() => {
     fetchProfile()
     fetchNewCaptcha()
+    window.scrollTo(0, 0)
   }, [])
 
   const fetchProfile = async () => {

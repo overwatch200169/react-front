@@ -9,6 +9,7 @@ const EggPage = () => {
 
   useEffect(() => {
     fetchEggData()
+    window.scrollTo(0, 0)
   }, [])
 
   const fetchEggData = async () => {

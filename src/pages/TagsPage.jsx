@@ -9,6 +9,7 @@ const TagsPage = () => {
 
   useEffect(() => {
     fetchTags()
+    window.scrollTo(0, 0)
   }, [])
 
   const fetchTags = async () => {

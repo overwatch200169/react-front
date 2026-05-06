@@ -33,6 +33,7 @@ const ArticleList = () => {
 
   useEffect(() => {
     fetchArticles()
+    window.scrollTo(0, 0)
   }, [tag, searchQuery, dateYearMonth, currentOffset])
 
   const fetchAuthorName = async (userId) => {
