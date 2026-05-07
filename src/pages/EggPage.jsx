@@ -139,26 +139,28 @@ const EggPage = () => {
                 }))}
                 angleField="value"
                 colorField="type"
-                radius={isMobile ? 0.7 : 0.9}
-                innerRadius={isMobile ? 0.3 : 0.5}
+                radius={isMobile ? 0.8 : 0.9}
+                innerRadius={isMobile ? 0.4 : 0.5}
                 height={isMobile ? 350 : 700}
+                width={isMobile ? 300 : 800}
                 marginTop={isMobile ? 20 : 50}
                 marginLeft={isMobile ? 10 : 20}
                 marginBottom={isMobile ? 60 : 50}
                 marginRight={isMobile ? 10 : 20}
                 label={{
-                  text: (d) => isMobile ? d.type : `${d.type}\n ${d.value}张\n ${d.percent.toFixed(2)}%`,
+                  text: (d) => isMobile ? `${d.type}\n ${d.value}张` : `${d.type}\n ${d.value}张\n ${d.percent.toFixed(2)}%`,
                   position: 'spider',
                   transform: [
                     {
                       type: 'overlapDodgeY',
-                      padding: isMobile ? 2 : 30,
+                      padding: isMobile ? 10 : 30,
                       maxIterations: isMobile ? 30 : 50
                     }
                   ],
                   style: {
                     fontWeight: 'bold',
-                    fontSize: isMobile ? 10 : 12,
+                    fontSize: isMobile ? 10 : 13,
+                   
                   },
                 }}
                 legend={{
@@ -166,6 +168,10 @@ const EggPage = () => {
                     title: false,
                     position: isMobile ? 'bottom' : 'right',
                     rowPadding: 5,
+                  },
+                  style: {
+                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+                     fontSize: isMobile ? 10 : 13,
                   },
                 }}
                 tooltip={{
@@ -185,8 +191,9 @@ const EggPage = () => {
                       x: '50%',
                       y: '50%',
                       textAlign: 'center',
-                      fontSize: isMobile ? 9 : 14,
+                      fontSize: isMobile ? 10 : 30,
                       fontWeight: 'bold',
+                      
                     },
                   },
                 ]}

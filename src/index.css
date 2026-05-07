@@ -8,6 +8,13 @@
   font-family: 'MiSans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
+/* Ant Design Charts 全局字体设置 */
+.ant-design-charts,
+.g2-html-annotation,
+canvas {
+  font-family: 'MiSans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+}
+
 :root {
   /* Primary Colors - 低饱和度浅绿色 */
   --md-primary: #6B9B7A;
