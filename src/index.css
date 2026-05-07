@@ -15,6 +15,65 @@ canvas {
   font-family: 'MiSans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
 }
 
+/* Ant Design Charts 暗色主题适配 */
+@media (prefers-color-scheme: dark) {
+  .ant-design-charts,
+  .ant-design-charts canvas,
+  .g2-chart-container canvas {
+    filter: brightness(0.9) contrast(1.1);
+  }
+}
+
+/* 暗色主题下图表文字颜色 */
+[data-theme='dark'] .ant-design-charts,
+.dark .ant-design-charts,
+.ant-design-charts[data-theme-mode='dark'] {
+  --chart-text-color: var(--md-on-surface);
+  --chart-axis-color: var(--md-outline);
+  --chart-tooltip-bg: var(--md-surface-container-high);
+  --chart-legend-text: var(--md-on-surface);
+}
+
+[data-theme='dark'] .g2-tooltip,
+.dark .g2-tooltip {
+  background-color: var(--md-surface-container-high) !important;
+  color: var(--md-on-surface) !important;
+  border: 1px solid var(--md-outline-variant) !important;
+}
+
+[data-theme='dark'] .g2-tooltip-title,
+.dark .g2-tooltip-title {
+  color: var(--md-on-surface) !important;
+}
+
+[data-theme='dark'] .g2-tooltip-list-item,
+.dark .g2-tooltip-list-item {
+  color: var(--md-on-surface-variant) !important;
+}
+
+/* 暗色主题下图例文字颜色 */
+[data-theme='dark'] .g2-legend-text,
+.dark .g2-legend-text,
+[data-theme='dark'] .g2-legend-list-item-text,
+.dark .g2-legend-list-item-text,
+[data-theme='dark'] .legend-item-name,
+.dark .legend-item-name {
+  color: #DCE3DD !important;
+}
+
+/* 暗色主题下图例项和颜色标记 */
+[data-theme='dark'] .g2-legend-list-item,
+.dark .g2-legend-list-item,
+[data-theme='dark'] .legend-item,
+.dark .legend-item {
+  color: #DCE3DD !important;
+}
+
+[data-theme='dark'] .g2-legend-marker,
+.dark .g2-legend-marker {
+  opacity: 1 !important;
+}
+
 :root {
   /* Primary Colors - 低饱和度浅绿色 */
   --md-primary: #6B9B7A;
@@ -1032,7 +1091,7 @@ a:hover {
   }
 
   .mobile-timeline-container {
-    padding: 0;
+    padding: 0 24px;
   }
 
   /* 移动端时间线显示 */
@@ -1041,9 +1100,9 @@ a:hover {
     width: 100%;
     position: static;
     max-height: none;
-    border: none;
-    border-radius: 8px;
-    background: white;
+    border: 1px solid var(--md-outline-variant);
+    border-radius: var(--md-shape-medium);
+    background: var(--md-surface);
   }
 }
 
@@ -2138,7 +2197,6 @@ body {
   
   .articles-container {
     max-width: 100%;
-    padding: 0;
   }
   
   .articles-grid {
@@ -2302,6 +2360,21 @@ body {
   .author-page .back-button {
     width: calc(100% - 48px);
     margin: 0 24px;
+  }
+}
+
+/* Landscape mode (width between 640px and 1024px) */
+@media (min-width: 641px) and (max-width: 1023px) {
+  .articles-container {
+    padding: 0 24px;
+  }
+
+  .timeline-month {
+    padding: 10px 24px;
+  }
+
+  .timeline-content {
+    padding: 0 24px;
   }
 }
 

@@ -3,12 +3,14 @@ import { Table } from 'antd'
 import { Pie } from '@ant-design/plots'
 import { getEgg, getEggChecki } from '../services/api'
 import { CoffeeOutlined } from '@ant-design/icons'
+import { useTheme } from '../context/ThemeContext'
 
 const EggPage = () => {
   const [eggList, setEggList] = useState([])
   const [checkiData, setCheckiData] = useState([])
   const [loading, setLoading] = useState(true)
   const [isMobile, setIsMobile] = useState(false)
+  const { isDark } = useTheme()
 
   useEffect(() => {
     fetchEggData()
@@ -131,7 +133,8 @@ const EggPage = () => {
               alignItems: 'center',
               justifyContent: 'center'
             }}>
-              <Pie
+              <div style={{ width: isMobile ? '100%' : 800, display: 'flex', justifyContent: 'center' }}>
+                <Pie
                 data={checkiData.map(item => ({
                   type: item.name || '未知',
                   value: item.cheki_count || 0,
@@ -139,14 +142,21 @@ const EggPage = () => {
                 }))}
                 angleField="value"
                 colorField="type"
-                radius={isMobile ? 0.8 : 0.9}
-                innerRadius={isMobile ? 0.4 : 0.5}
+                radius={isMobile ? 0.7 : 0.8}
+                innerRadius={isMobile ? 0.35 : 0.4}
                 height={isMobile ? 350 : 700}
-                width={isMobile ? 300 : 800}
+                
                 marginTop={isMobile ? 20 : 50}
                 marginLeft={isMobile ? 10 : 20}
                 marginBottom={isMobile ? 60 : 50}
                 marginRight={isMobile ? 10 : 20}
+                theme={{
+                  colorScheme: isDark ? 'dark' : 'light',
+                  defaultColor: isDark ? '#7AAF8A' : '#6B9B7A',
+                  style: {
+                    backgroundColor: 'transparent',
+                  },
+                }}
                 label={{
                   text: (d) => isMobile ? `${d.type}\n ${d.value}张` : `${d.type}\n ${d.value}张\n ${d.percent.toFixed(2)}%`,
                   position: 'spider',
@@ -160,18 +170,23 @@ const EggPage = () => {
                   style: {
                     fontWeight: 'bold',
                     fontSize: isMobile ? 10 : 13,
-                   
+                    fill: isDark ? '#DCE3DD' : '#2D3B32',
                   },
+                  textBaseline: 'top',
+                
+                  connectorStroke: isDark ? '#DCE3DD' : '#2D3B320649f2',
                 }}
                 legend={{
                   color: {
                     title: false,
                     position: isMobile ? 'bottom' : 'right',
                     rowPadding: 5,
+                    itemLabelFill: isDark ? '#DCE3DD' : '#2D3B32',
                   },
                   style: {
                     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-                     fontSize: isMobile ? 10 : 13,
+                    fontSize: isMobile ? 10 : 13,
+                    fill: isDark ? '#DCE3DD' : '#2D3B32',
                   },
                 }}
                 tooltip={{
@@ -193,11 +208,12 @@ const EggPage = () => {
                       textAlign: 'center',
                       fontSize: isMobile ? 10 : 30,
                       fontWeight: 'bold',
-                      
+                      fill: isDark ? '#DCE3DD' : '#2D3B32',
                     },
                   },
                 ]}
               />
+              </div>
             </div>
           </div>
         )}
