@@ -10,6 +10,7 @@ const EggPage = () => {
   const [checkiData, setCheckiData] = useState([])
   const [loading, setLoading] = useState(true)
   const [isMobile, setIsMobile] = useState(false)
+  const [isTablet, setIsTablet] = useState(false)
   const { isDark } = useTheme()
 
   useEffect(() => {
@@ -18,7 +19,9 @@ const EggPage = () => {
     window.scrollTo(0, 0)
     
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768)
+      const width = window.innerWidth
+      setIsMobile(width < 768)
+      setIsTablet(width >= 768 && width <= 1024)
     }
     
     handleResize()
@@ -127,7 +130,7 @@ const EggPage = () => {
             <div style={{
               maxWidth: isMobile ? '100%' : 900,
               margin: '0 auto',
-              minHeight: isMobile ? 400 : 500,
+              minHeight: isMobile ? 500 : 600,
               padding: isMobile ? '10px' : '0',
               display: 'flex',
               alignItems: 'center',
@@ -142,13 +145,15 @@ const EggPage = () => {
                 }))}
                 angleField="value"
                 colorField="type"
-                radius={isMobile ? 0.7 : 0.8}
+                radius={isMobile ? 0.5 : 0.7}
                 innerRadius={isMobile ? 0.35 : 0.4}
-                height={isMobile ? 350 : 700}
+                
+                height={isMobile ? 500 : 700}
+                // width={isMobile ? 400 : 800}
                 
                 marginTop={isMobile ? 20 : 50}
                 marginLeft={isMobile ? 10 : 20}
-                marginBottom={isMobile ? 60 : 50}
+                marginBottom={isMobile ? 20 : 50}
                 marginRight={isMobile ? 10 : 20}
                 theme={{
                   colorScheme: isDark ? 'dark' : 'light',
@@ -158,28 +163,35 @@ const EggPage = () => {
                   },
                 }}
                 label={{
-                  text: (d) => isMobile ? `${d.type}\n ${d.value}张` : `${d.type}\n ${d.value}张\n ${d.percent.toFixed(2)}%`,
-                  position: 'spider',
+                  text: (d) => isMobile ? d.value : `${d.type}  ${d.value}张  ${d.percent.toFixed(0)}%`,
+                  position: isMobile ? 'outside' : 'spider',
+                  connector: true,
+                  connectorStroke: isDark ? '#DCE3DD' : '#2D3B32',
+                  connectorLineWidth: 1,
                   transform: [
                     {
                       type: 'overlapDodgeY',
-                      padding: isMobile ? 10 : 30,
-                      maxIterations: isMobile ? 30 : 50
-                    }
+                      padding:20,
+                      maxIterations:10,
+
+
+                    },
+                  ],
+                  layout: [
+                    {
+                      type: 'limitInShape',
+                    },
                   ],
                   style: {
                     fontWeight: 'bold',
-                    fontSize: isMobile ? 10 : 13,
+                    fontSize: isMobile ? 10 : 12,
                     fill: isDark ? '#DCE3DD' : '#2D3B32',
                   },
-                  textBaseline: 'top',
-                
-                  connectorStroke: isDark ? '#DCE3DD' : '#2D3B320649f2',
                 }}
                 legend={{
                   color: {
                     title: false,
-                    position: isMobile ? 'bottom' : 'right',
+                    position: (isMobile || isTablet) ? 'bottom' : 'right',
                     rowPadding: 5,
                     itemLabelFill: isDark ? '#DCE3DD' : '#2D3B32',
                   },
@@ -194,9 +206,18 @@ const EggPage = () => {
                   items: [
                     (datum) => ({
                       name: datum.type,
-                      value: `${datum.value} 张`
+                      value: `${datum.value} 张`,
                     })
-                  ]
+                  ],
+                }}
+                interaction={{
+                  tooltip: {
+                    css: {
+                      '.g2-tooltip-list-item-value': {
+                        color: isDark ? '#DCE3DD' : '#2D3B32',
+                      },
+                    },
+                  }
                 }}
                 annotations={[
                   {
@@ -212,6 +233,11 @@ const EggPage = () => {
                     },
                   },
                 ]}
+                style={{
+                  // stroke: '#fff',
+      inset: 1,
+      radius: 3,
+                }}
               />
               </div>
             </div>
