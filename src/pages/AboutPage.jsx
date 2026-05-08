@@ -126,7 +126,13 @@ const AboutPage = () => {
           </div>
         )}
         <div className="about-header">
-          <div className="about-avatar"><UserOutlined /></div>
+          <div className="about-avatar">
+            {profile?.avatar_url ? (
+              <img src={profile.avatar_url} alt="头像" />
+            ) : (
+              <UserOutlined />
+            )}
+          </div>
           <div className="about-info">
             <h1>关于我</h1>
             <p>热爱技术，享受代码带来的乐趣</p>
