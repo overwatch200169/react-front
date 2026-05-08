@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import {useTransition, useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { getUserById, getUserProfile, getArticlesByUser } from '../services/api'
 import { CalendarOutlined, UserOutlined, GiftOutlined, FileTextOutlined } from '@ant-design/icons'
@@ -53,8 +53,10 @@ const AuthorPage = () => {
     }
   }
 
+  const [isPending, startTransition] = useTransition();
   // 处理分页变化
   const handlePageChange = (page, newPageSize) => {
+    startTransition(() => {
     if (newPageSize !== pageSize) {
       setPageSize(newPageSize)
       setCurrentOffset(0)
@@ -62,6 +64,7 @@ const AuthorPage = () => {
       setCurrentOffset((page - 1) * pageSize)
     }
     window.scrollTo({ top: 0, behavior: 'smooth' })
+    });
   }
 
   // 计算当前页码
@@ -147,7 +150,13 @@ const AuthorPage = () => {
         </div>
       ) : (
         <>
-          <div className="articles-grid">
+          <div className="articles-grid"
+          style={{ 
+    opacity: isPending ? 0.6 : 1,      // 正在加载时变半透明
+    transition: 'opacity 0.3s ease',   // 丝滑过渡
+    pointerEvents: isPending ? 'none' : 'auto' // 加载时防止重复点击
+  }}
+          >
             {articles.map((article) => {
               const tags = article.tags 
                 ? (Array.isArray(article.tags) ? article.tags : article.tags.split(','))
