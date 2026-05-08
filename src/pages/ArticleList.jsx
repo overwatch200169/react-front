@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams, useSearchParams, Link } from 'react-router-dom'
+import { Pagination } from 'antd'
 import { searchArticles, getArticles, getUserById } from '../services/api'
 import { DownOutlined, UnorderedListOutlined, ClockCircleOutlined } from '@ant-design/icons'
 import TimelineSidebar from '../components/TimelineSidebar'
@@ -11,12 +12,12 @@ const ArticleList = () => {
   const [error, setError] = useState(null)
   const [totalArticles, setTotalArticles] = useState(0)
   const [currentOffset, setCurrentOffset] = useState(0)
+  const [pageSize, setPageSize] = useState(10)
   const [searchParams] = useSearchParams()
   const [isMobile, setIsMobile] = useState(false)
   const [activeTab, setActiveTab] = useState('list') // 'list' | 'timeline'
   const [heroImageFailed, setHeroImageFailed] = useState(false)
   const [heroImageLoaded, setHeroImageLoaded] = useState(false)
-  const PAGE_SIZE = 50
   const searchQuery = searchParams.get('search')
   const dateYearMonth = searchParams.get('date_year_month')
   const { tag } = useParams()
@@ -50,7 +51,7 @@ const ArticleList = () => {
   useEffect(() => {
     fetchArticles()
     window.scrollTo(0, 0)
-  }, [tag, searchQuery, dateYearMonth, currentOffset])
+  }, [tag, searchQuery, dateYearMonth, currentOffset, pageSize])
 
   const fetchAuthorName = async (userId) => {
     if (authorNames[userId] || !userId) return
@@ -69,20 +70,20 @@ const ArticleList = () => {
       let data
       let total = 0
       if (dateYearMonth) {
-        const result = await searchArticles({ date_year_month: dateYearMonth, size: 50 })
-        data = result?.results || []
+        const result = await searchArticles({ date_year_month: dateYearMonth, size: pageSize, offset: currentOffset })
+        data = result?.items || result?.results || []
         total = result?.total || data.length
       } else if (searchQuery) {
-        const result = await searchArticles({ q: searchQuery, size: 50 })
-        data = result?.results || []
+        const result = await searchArticles({ q: searchQuery, size: pageSize, offset: currentOffset })
+        data = result?.items || result?.results || []
         total = result?.total || data.length
       } else if (tag) {
-        const result = await searchArticles({ tags: [tag], size: 50 })
-        data = result?.results || []
+        const result = await searchArticles({ tags: [tag], size: pageSize, offset: currentOffset })
+        data = result?.items || result?.results || []
         total = result?.total || data.length
       } else {
-        const result = await getArticles({ limit: PAGE_SIZE, offset: currentOffset })
-        data = result?.results || result || []
+        const result = await getArticles({ limit: pageSize, offset: currentOffset })
+        data = result?.items || result?.results || result || []
         total = result?.total || data.length
       }
 
@@ -118,30 +119,26 @@ const ArticleList = () => {
     }
   }
 
-  const handlePageChange = (newOffset) => {
-    setCurrentOffset(newOffset)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-
-  const getPageButtons = () => {
-    const totalPages = Math.ceil(totalArticles / PAGE_SIZE)
-    if (totalPages <= 1) return null
-
-    const buttons = []
-    for (let i = 0; i < totalPages; i++) {
-      const offset = i * PAGE_SIZE
-      buttons.push(
-        <button
-          key={i}
-          onClick={() => handlePageChange(offset)}
-          className={`pagination-button ${currentOffset === offset ? 'active' : ''}`}
-        >
-          {i + 1}
-        </button>
-      )
+  // 处理分页变化
+  const handlePageChange = (page, newPageSize) => {
+    // 如果 pageSize 发生变化，重置到第一页
+    if (newPageSize !== pageSize) {
+      setPageSize(newPageSize)
+      setCurrentOffset(0)
+    } else {
+      setCurrentOffset((page - 1) * pageSize)
     }
-    return buttons
+    // 滚动到文章列表顶部
+    const articlesSection = document.getElementById('articles-section')
+    if (articlesSection) {
+      articlesSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
   }
+
+  // 计算当前页码
+  const currentPage = Math.floor(currentOffset / pageSize) + 1
 
   // 首页渲染 Hero 区域
   if (isHomePage && !searchQuery && !dateYearMonth && !tag) {
@@ -251,27 +248,22 @@ const ArticleList = () => {
                         })}
                       </div>
 
-                      {getPageButtons() && (
-                        <div className="pagination">
-                          {currentOffset > 0 && (
-                            <button
-                              onClick={() => handlePageChange(currentOffset - PAGE_SIZE)}
-                              className="pagination-button"
-                            >
-                              ← 上一页
-                            </button>
-                          )}
-                          {getPageButtons()}
-                          {currentOffset + PAGE_SIZE < totalArticles && (
-                            <button
-                              onClick={() => handlePageChange(currentOffset + PAGE_SIZE)}
-                              className="pagination-button"
-                            >
-                              下一页 →
-                            </button>
-                          )}
-                        </div>
-                      )}
+                      {/* Ant Design 分页组件 */}
+                      <div className="pagination-container">
+                        <Pagination
+                          current={currentPage}
+                          pageSize={pageSize}
+                          total={totalArticles}
+                          onChange={handlePageChange}
+                          showSizeChanger
+                          showQuickJumper
+                          pageSizeOptions={['5', '10', '20', '50']}
+                          showTotal={(total, range) => `${range[0]}-${range[1]} / 共 ${total} 条`}
+                          locale={{
+                            items_per_page: '条/页',
+                          }}
+                        />
+                      </div>
                     </>
                   )}
                 </div>
@@ -311,7 +303,7 @@ const ArticleList = () => {
   }
 
   return (
-    <div className="container">
+    <div id="articles-section" className="container">
       <div className="page-header">
         {isSearchResult && (
           <button 
@@ -344,53 +336,72 @@ const ArticleList = () => {
           <p>暂无文章</p>
         </div>
       ) : (
-        <div className="articles-grid">
-          {articles.map((article) => {
-            const tags = article.tags 
-              ? (Array.isArray(article.tags) ? article.tags : article.tags.split(','))
-              : []
-            const displayTags = tags.slice(0, 4)
-            return (
-            <div 
-              key={article.article_id} 
-              className="article-card-minimal"
-              onClick={() => navigate(`/article/${article.article_id}`)}
-            >
-              <div className="article-card-left">
-                <h2 className="article-card-title">{article.title}</h2>
-                {displayTags.length > 0 && (
-                  <div className="article-card-tags">
-                    {displayTags.map((tag, index) => (
-                      <span 
-                        key={index} 
-                        className="article-tag"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          navigate(`/tags/${typeof tag === 'string' ? tag.trim() : tag}`)
-                        }}
-                      >
-                        {typeof tag === 'string' ? tag.trim() : tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
+        <>
+          <div className="articles-grid">
+            {articles.map((article) => {
+              const tags = article.tags 
+                ? (Array.isArray(article.tags) ? article.tags : article.tags.split(','))
+                : []
+              const displayTags = tags.slice(0, 4)
+              return (
+              <div 
+                key={article.article_id} 
+                className="article-card-minimal"
+                onClick={() => navigate(`/article/${article.article_id}`)}
+              >
+                <div className="article-card-left">
+                  <h2 className="article-card-title">{article.title}</h2>
+                  {displayTags.length > 0 && (
+                    <div className="article-card-tags">
+                      {displayTags.map((tag, index) => (
+                        <span 
+                          key={index} 
+                          className="article-tag"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            navigate(`/tags/${typeof tag === 'string' ? tag.trim() : tag}`)
+                          }}
+                        >
+                          {typeof tag === 'string' ? tag.trim() : tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <div className="article-card-right">
+                  {article.author_id && (
+                    <Link 
+                      to={`/author/${article.author_id}`} 
+                      className="article-card-author"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      {authorNames[article.author_id] || '加载中...'}
+                    </Link>
+                  )}
+                  <span className="article-card-date">{formatDate(article.create_time)}</span>
+                </div>
               </div>
-              <div className="article-card-right">
-                {article.author_id && (
-                  <Link 
-                    to={`/author/${article.author_id}`} 
-                    className="article-card-author"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    {authorNames[article.author_id] || '加载中...'}
-                  </Link>
-                )}
-                <span className="article-card-date">{formatDate(article.create_time)}</span>
-              </div>
-            </div>
-            )
-          })}
-        </div>
+              )
+            })}
+          </div>
+
+          {/* Ant Design 分页组件 */}
+          <div className="pagination-container">
+            <Pagination
+              current={currentPage}
+              pageSize={pageSize}
+              total={totalArticles}
+              onChange={handlePageChange}
+              showSizeChanger
+              showQuickJumper
+              pageSizeOptions={['5', '10', '20', '50']}
+              showTotal={(total, range) => `${range[0]}-${range[1]} / 共 ${total} 条`}
+              locale={{
+                items_per_page: '条/页',
+              }}
+            />
+          </div>
+        </>
       )}
     </div>
   )

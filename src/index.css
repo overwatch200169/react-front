@@ -186,11 +186,11 @@ canvas {
   --md-tertiary-container: #4D5D52;
   --md-on-tertiary-container: #C8D4CB;
 
-  /* Error Colors */
-  --md-error: #F2B8B5;
-  --md-on-error: #601410;
-  --md-error-container: #8C1D18;
-  --md-on-error-container: #F9DEDC;
+  /* Error Colors - 暗色主题使用琥珀色/橙色 */
+  --md-error: #FFB74D;
+  --md-on-error: #4A2800;
+  --md-error-container: #5D3A00;
+  --md-on-error-container: #FFE0B2;
 
   /* Surface Colors - 低饱和度深灰绿底色 */
   --md-surface: #1A2E22;
@@ -262,11 +262,11 @@ canvas {
     --md-tertiary-container: #4D5D52;
     --md-on-tertiary-container: #C8D4CB;
 
-    /* Error Colors */
-    --md-error: #F2B8B5;
-    --md-on-error: #601410;
-    --md-error-container: #8C1D18;
-    --md-on-error-container: #F9DEDC;
+    /* Error Colors - 暗色主题使用琥珀色/橙色 */
+    --md-error: #FFB74D;
+    --md-on-error: #4A2800;
+    --md-error-container: #5D3A00;
+    --md-on-error-container: #FFE0B2;
 
     /* Surface Colors - 低饱和度深灰绿底色 */
     --md-surface: #1A2E22;
@@ -2461,8 +2461,8 @@ body {
 .error {
   text-align: center;
   padding: 80px 24px;
-  color: #EF4444;
-  background: #FEF2F2;
+  color: var(--md-error);
+  background: var(--md-error-container);
   border-radius: 12px;
   margin: 24px 0;
 }
@@ -2534,4 +2534,35 @@ body {
 .container .articles-grid {
   border-radius: 12px;
   overflow: hidden;
+}
+
+/* 分页容器样式 */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0;
+  margin-top: 16px;
+}
+
+.pagination-container .ant-pagination {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pagination-container .ant-pagination-total-text {
+  color: var(--md-on-surface-variant);
+}
+
+/* 移动端分页适配 */
+@media (max-width: 768px) {
+  .pagination-container {
+    padding: 16px 0;
+    overflow-x: auto;
+  }
+
+  .pagination-container .ant-pagination {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+  }
 }
