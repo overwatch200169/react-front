@@ -10,19 +10,11 @@ const LazyImage = ({ src, alt, className, style, fallback, wrapperStyle }) => {
     if (fallback) {
       return fallback
     }
-    // 错误时显示占位图标，保持容器尺寸
+    // 错误时显示占位图标
     return (
       <div 
-        className={`lazy-image-wrapper lazy-image-error ${className || ''}`} 
-        style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'center',
-          backgroundColor: 'var(--md-surface-container-high, #e0e0e0)',
-          minHeight: wrapperStyle?.height || 120,
-          ...wrapperStyle,
-          ...style 
-        }}
+        className={`lazy-image-container lazy-image-error ${className || ''}`}
+        style={{ ...wrapperStyle, ...style }}
       >
         <UserOutlined style={{ fontSize: 48, color: 'var(--md-on-surface-variant, #999)' }} />
       </div>
@@ -31,7 +23,10 @@ const LazyImage = ({ src, alt, className, style, fallback, wrapperStyle }) => {
 
   return (
     <LazyLoad height={200} once offset={100}>
-      <div className={`lazy-image-wrapper ${className || ''}`} style={{ ...wrapperStyle, ...style }}>
+      <div 
+        className={`lazy-image-container ${className || ''}`}
+        style={{ ...wrapperStyle, ...style }}
+      >
         {!loaded && (
           <div className="lazy-image-placeholder" />
         )}
@@ -41,7 +36,6 @@ const LazyImage = ({ src, alt, className, style, fallback, wrapperStyle }) => {
           className={`lazy-image ${loaded ? 'lazy-image-loaded' : ''}`}
           onLoad={() => setLoaded(true)}
           onError={() => setError(true)}
-          style={{ opacity: loaded ? 1 : 0 }}
         />
       </div>
     </LazyLoad>
