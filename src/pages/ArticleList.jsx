@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useTransition,useState, useEffect } from 'react'
 import { useNavigate, useParams, useSearchParams, Link } from 'react-router-dom'
 import { Pagination } from 'antd'
 import { searchArticles, getArticles, getUserById } from '../services/api'
@@ -50,7 +50,7 @@ const ArticleList = () => {
 
   useEffect(() => {
     fetchArticles()
-    window.scrollTo(0, 0)
+    
   }, [tag, searchQuery, dateYearMonth, currentOffset, pageSize])
 
   const fetchAuthorName = async (userId) => {
@@ -65,7 +65,9 @@ const ArticleList = () => {
 
   const fetchArticles = async () => {
     try {
-      setLoading(true)
+      if (articles.length === 0) {
+      setLoading(true);
+    }
 
       let data
       let total = 0
@@ -118,9 +120,10 @@ const ArticleList = () => {
       contentSection.scrollIntoView({ behavior: 'smooth' })
     }
   }
-
+  const [isPending, startTransition] = useTransition();
   // 处理分页变化
   const handlePageChange = (page, newPageSize) => {
+    startTransition(() => {
     // 如果 pageSize 发生变化，重置到第一页
     if (newPageSize !== pageSize) {
       setPageSize(newPageSize)
@@ -128,6 +131,7 @@ const ArticleList = () => {
     } else {
       setCurrentOffset((page - 1) * pageSize)
     }
+    
     // 滚动到文章列表顶部
     const articlesSection = document.getElementById('articles-section')
     if (articlesSection) {
@@ -135,6 +139,7 @@ const ArticleList = () => {
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }
+  });
   }
 
   // 计算当前页码
@@ -200,7 +205,11 @@ const ArticleList = () => {
                     </div>
                   ) : (
                     <>
-                      <div className="articles-grid">
+                      <div className="articles-grid" style={{ 
+    opacity: isPending ? 0.6 : 1,      // 正在加载时变半透明
+    transition: 'opacity 0.3s ease',   // 丝滑过渡
+    pointerEvents: isPending ? 'none' : 'auto' // 加载时防止重复点击
+  }}>
                         {articles.map((article) => {
                           const tags = article.tags 
                             ? (Array.isArray(article.tags) ? article.tags : article.tags.split(','))
