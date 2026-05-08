@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { getArticleById, getUserById } from '../services/api'
 import { CalendarOutlined, UserOutlined } from '@ant-design/icons'
+import useMarkdownImages from '../hooks/useMarkdownImages'
 
 const ArticleDetail = () => {
   const { id } = useParams()
@@ -12,6 +13,9 @@ const ArticleDetail = () => {
   const [author, setAuthor] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+
+  // 为 Markdown 内容中的图片添加懒加载效果
+  useMarkdownImages('.markdown-content')
 
   useEffect(() => {
     fetchArticle()

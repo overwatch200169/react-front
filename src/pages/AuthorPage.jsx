@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { getUserById, getUserProfile, getArticlesByUser } from '../services/api'
 import { CalendarOutlined, UserOutlined, GiftOutlined, FileTextOutlined } from '@ant-design/icons'
+import LazyImage from '../components/LazyImage'
+import '../styles/LazyImage.css'
 
 const AuthorPage = () => {
   const { id } = useParams()
@@ -94,7 +96,7 @@ const AuthorPage = () => {
       <div className="author-profile-card">
         <div className="author-avatar-large">
           {profile?.avatar_url ? (
-            <img src={profile.avatar_url} alt={user?.username} />
+            <LazyImage src={profile.avatar_url} alt={user?.username} />
           ) : (
             <UserOutlined />
           )}

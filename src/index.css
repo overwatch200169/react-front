@@ -1,6 +1,13 @@
 /* Material Design 3 Theme */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
+/* Markdown 图片懒加载样式 */
+.markdown-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  margin: 16px 0;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -1914,6 +1921,35 @@ body {
     var(--hero-gradient-end) 100%
   );
   z-index: 0;
+}
+
+/* Hero 图片加载失败时的回退背景 */
+.hero-image-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+  opacity: 1;
+  filter: blur(4px);
+}
+
+.hero-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.hero-image.hero-image-loaded {
+  opacity: 1;
 }
 
 .hero-bg::before {

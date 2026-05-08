@@ -1,0 +1,42 @@
+.lazy-image {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.lazy-image.lazy-image-loaded,
+.lazy-image.loaded {
+  opacity: 1;
+}
+
+.lazy-image-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.lazy-image-placeholder {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: lazy-shimmer 1.5s infinite;
+}
+
+@keyframes lazy-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* 暗色模式适配 */
+[data-theme="dark"] .lazy-image-placeholder {
+  background: linear-gradient(90deg, #2a2a2a 25%, #333 50%, #2a2a2a 75%);
+  background-size: 200% 100%;
+}
+
+/* LazyImage 错误状态 */
+.lazy-image-error {
+  border-radius: inherit;
+}

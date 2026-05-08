@@ -14,11 +14,27 @@ const ArticleList = () => {
   const [searchParams] = useSearchParams()
   const [isMobile, setIsMobile] = useState(false)
   const [activeTab, setActiveTab] = useState('list') // 'list' | 'timeline'
+  const [heroImageFailed, setHeroImageFailed] = useState(false)
+  const [heroImageLoaded, setHeroImageLoaded] = useState(false)
   const PAGE_SIZE = 50
   const searchQuery = searchParams.get('search')
   const dateYearMonth = searchParams.get('date_year_month')
   const { tag } = useParams()
   const navigate = useNavigate()
+  
+  const heroImageUrl = 'https://pub-c487eb6882174c26a8f6e44dc041dac3.r2.dev/articles/8500f160-d359-4785-9cc0-2f86bdad0c43-1778234623.462131-articles.jpg'
+  
+  // 预加载 hero 图片
+  useEffect(() => {
+    const img = new Image()
+    img.onload = () => setHeroImageLoaded(true)
+    img.onerror = () => {
+      setHeroImageFailed(true)
+      // 加载失败时也设置为已加载，让图片可见（带错误状态）
+      setHeroImageLoaded(true)
+    }
+    img.src = heroImageUrl
+  }, [])
 
   const isHomePage = !searchQuery && !dateYearMonth && !tag
 
@@ -134,6 +150,13 @@ const ArticleList = () => {
         {/* Hero Section */}
         <section className="hero">
           <div className="hero-bg"></div>
+          {!heroImageFailed && (
+            <img
+              src={heroImageUrl}
+              alt=""
+              className={`hero-image ${heroImageLoaded ? 'hero-image-loaded' : ''}`}
+            />
+          )}
           <div className="hero-content">
             <h1 className="hero-title">偶活，我要偶活</h1>
             <p className="hero-subtitle">地下偶像把我害惨了（不是）</p>

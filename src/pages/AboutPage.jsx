@@ -4,6 +4,8 @@ import { CheckCircleOutlined, CloseCircleOutlined, LoadingOutlined} from '@ant-d
 import { UserOutlined, BookOutlined, ToolOutlined, MailOutlined, CoffeeOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import { getUserProfile, getCaptcha, sendContactEmail } from '../services/api'
+import LazyImage from '../components/LazyImage'
+import '../styles/LazyImage.css'
 
 const { TextArea } = Input
 
@@ -128,7 +130,7 @@ const AboutPage = () => {
         <div className="about-header">
           <div className="about-avatar">
             {profile?.avatar_url ? (
-              <img src={profile.avatar_url} alt="头像" />
+              <LazyImage src={profile.avatar_url} alt="头像" />
             ) : (
               <UserOutlined />
             )}

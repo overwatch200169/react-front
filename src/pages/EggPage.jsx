@@ -4,6 +4,8 @@ import { Pie } from '@ant-design/plots'
 import { getEgg, getEggChecki } from '../services/api'
 import { CoffeeOutlined } from '@ant-design/icons'
 import { useTheme } from '../context/ThemeContext'
+import LazyImage from '../components/LazyImage'
+import '../styles/LazyImage.css'
 
 const EggPage = () => {
   const [eggList, setEggList] = useState([])
@@ -92,10 +94,10 @@ const EggPage = () => {
       key: 'picture_url',
       align: 'center',
       render: (text) => text ? (
-        <img 
-          src={text} 
-          alt="头像" 
-          style={{ width: 60, height: 60, borderRadius: '50%', objectFit: 'cover' }} 
+        <LazyImage
+          src={text}
+          alt="头像"
+          style={{ width: 60, height: 60, borderRadius: '50%', objectFit: 'cover' }}
         />
       ) : '-'
     }
