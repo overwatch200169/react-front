@@ -130,12 +130,20 @@ export const ThemeProvider = ({ children }) => {
     }
   }, [theme, resolvedTheme, applyTheme])
 
-  // Antd 配置（使用计算出的 resolvedTheme）
-  const algorithm = resolvedTheme === 'dark' ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm
+ // 🟢 3. Ant Design 主题算法切换
+  const antdConfig = {
+    // 根据 resolvedTheme 决定使用哪种算法
+    algorithm: resolvedTheme === 'dark' ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
+    token: {
+      colorPrimary: resolvedTheme === 'dark' ? '#7AAF8A' : '#6B9B7A', // 也可以在这里动态调色
+      borderRadius: 8,
+      fontFamily: "'MiSans', sans-serif",
+    },
+  }
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme, resolvedTheme }}>
-      <ConfigProvider theme={{ algorithm, token: { /* 你的token... */ } }}>
+      <ConfigProvider theme={antdConfig}>
         {children}
       </ConfigProvider>
     </ThemeContext.Provider>
