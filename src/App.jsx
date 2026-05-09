@@ -8,10 +8,27 @@ import TagsPage from './pages/TagsPage'
 import AboutPage from './pages/AboutPage'
 import AuthorPage from './pages/AuthorPage'
 import EggPage from './pages/EggPage'
+import { useTheme } from './context/ThemeContext'
+import { useEffect } from 'react'
 
 // 页面布局组件
 const Layout = ({ children }) => {
   const location = useLocation()
+const { theme, setTheme } = useTheme();
+
+useEffect(() => {
+  const handleResize = () => {
+    if (window.innerWidth <= 768) {
+      // 📱 移动端准则：强制回归系统模式
+      if (theme !== 'system') {
+        setTheme('system');
+      }
+    }
+  };
+  handleResize();
+  window.addEventListener('resize', handleResize);
+  return () => window.removeEventListener('resize', handleResize);
+}, [theme, setTheme]);
   // 在文章详情页、标签页、关于页面、彩蛋页面隐藏侧边栏
   const showSidebar = !location.pathname.startsWith('/article/') 
     && !location.pathname.startsWith('/tags')

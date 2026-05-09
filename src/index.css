@@ -23,13 +23,7 @@ canvas {
 }
 
 /* Ant Design Charts 暗色主题适配 */
-@media (prefers-color-scheme: dark) {
-  .ant-design-charts,
-  .ant-design-charts canvas,
-  .g2-chart-container canvas {
-    filter: brightness(0.9) contrast(1.1);
-  }
-}
+
 
 /* 暗色主题下图表文字颜色 */
 [data-theme='dark'] .ant-design-charts,
@@ -242,8 +236,9 @@ canvas {
 }
 
 /* Dark Theme - System Preference */
-@media (prefers-color-scheme: dark) {
-  :root {
+:root.dark, 
+[data-theme='dark'] {
+  :root :not(.light) {
     /* Primary Colors - 低饱和度柔和绿 */
     --md-primary: #7AAF8A;
     --md-on-primary: #1A2E22;
@@ -296,6 +291,11 @@ canvas {
     --md-state-pressed: rgba(77, 217, 192, 0.12);
     --md-state-dragged: rgba(77, 217, 192, 0.16);
   }
+
+  :root.dark {
+  --loom-bg: #1A2E22;
+  --loom-text: #DCE3DD;
+}
 
   body {
     background-color: var(--md-background);
@@ -1874,7 +1874,7 @@ a:hover {
   font-display: swap;
 }
 
-:root {
+:root,:root.light {
   /* Loom Green Theme */
   --loom-primary: #6B9B7A;
   --loom-primary-dark: #5A8A69;

@@ -7,7 +7,7 @@ const Header = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
-  const { isDark, toggleTheme } = useTheme()
+  const { theme, setTheme, resolvedTheme } = useTheme();
 
   const isActive = (path) => {
     if (path === '/') {
@@ -64,13 +64,18 @@ const Header = () => {
             关于
           </Link>
           {/* 主题切换按钮 - 仅桌面端显示 */}
-          <button 
-            className="theme-toggle-btn desktop-only" 
-            onClick={toggleTheme}
-            title={isDark ? '切换到亮色模式' : '切换到暗色模式'}
-          >
-            {isDark ? <SunOutlined /> : <MoonOutlined />}
-          </button>
+<button 
+  className="theme-toggle-btn desktop-only" 
+  onClick={() => {
+    // 🟢 核心：PC端点击时，直接在 light 和 dark 之间跳动，从而“切断”对系统的跟随
+    const nextTheme = resolvedTheme === 'dark' ? 'light' : 'dark';
+    setTheme(nextTheme);
+  }}
+  title={resolvedTheme === 'dark' ? '切换到亮色模式' : '切换到暗色模式'}
+>
+  {/* 根据 resolvedTheme 显示对应的图标 */}
+  {resolvedTheme === 'dark' ? <SunOutlined /> : <MoonOutlined />}
+</button>
         </nav>
       </div>
     </header>
