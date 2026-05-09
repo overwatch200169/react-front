@@ -1452,6 +1452,12 @@ a:hover {
   }
 }
 
+@media (min-width: 1024px) {
+  .timeline-sidebar {
+    width: 100%;
+  }
+}
+
 @media (max-width: 768px) {
   .layout-with-sidebar .timeline-sidebar {
     display: none;
@@ -2425,7 +2431,9 @@ body {
 @media (min-width: 1024px) {
   .articles-container {
     max-width: 900px;
+    padding-left: 3%;
   }
+
   
   .article-card-minimal {
     padding: 32px 40px;
@@ -2433,6 +2441,9 @@ body {
   
   .article-card-title {
     font-size: 1.25rem;
+  }
+  .articles-sidebar {
+    padding-right: 3%;
   }
 }
 
@@ -2542,6 +2553,8 @@ body {
   justify-content: center;
   padding: 24px 0;
   margin-top: 16px;
+  container-type: inline-size; 
+  container-name: pagination-wrapper;
 }
 
 .pagination-container .ant-pagination {
@@ -2564,5 +2577,12 @@ body {
   .pagination-container .ant-pagination {
     flex-wrap: nowrap;
     justify-content: flex-start;
+  }
+}
+
+@container pagination-wrapper (max-width: 600px) {
+  .ant-pagination-options-quick-jumper,
+  .ant-pagination-total-text {
+    display: none !important;
   }
 }
