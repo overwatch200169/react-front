@@ -103,17 +103,21 @@ const ArticleList = () => {
     }
   }
 
-  const formatDate = (dateString) => {
-    if (!dateString) return ''
-    const date = new Date(dateString)
-    return date.toLocaleDateString('zh-CN', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
-    }).replace(/\//g, '-')
-  }
+const formatDate = (dateString) => {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) return dateString;
 
+  const pad = (num) => String(num).padStart(2, '0');
+
+  const year = date.getFullYear();
+  const month = pad(date.getMonth() + 1);
+  const day = pad(date.getDate());
+  const hour = pad(date.getHours());
+  const minute = pad(date.getMinutes());
+
+  return `${year}-${month}-${day}`;
+};
   const scrollToContent = () => {
     const contentSection = document.getElementById('articles-section')
     if (contentSection) {
