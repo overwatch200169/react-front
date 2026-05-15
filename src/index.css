@@ -2586,3 +2586,16 @@ body {
     display: none !important;
   }
 }
+
+/* 针对代码块内部的所有 span (关键字、变量等) */
+.markdown-content pre code span,
+.markdown-content pre code,
+.markdown-content code {
+  font-family:  'JetBrains Mono', 'Fira Code','Source Code Pro','Cascadia Code', Consolas, monospace !important;
+}
+
+/* 针对 react-syntax-highlighter 生成的 pre 容器 */
+.markdown-content pre {
+  font-family: 'JetBrains Mono', 'Fira Code','Cascadia Code', monospace !important;
+  font-variant-ligatures: contextual; /* 开启连字效果 */
+}

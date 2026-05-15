@@ -5,6 +5,11 @@ import remarkGfm from 'remark-gfm'
 import { getArticleById, getUserById } from '../services/api'
 import { CalendarOutlined, UserOutlined } from '@ant-design/icons'
 import useMarkdownImages from '../hooks/useMarkdownImages'
+import { PrismAsync, Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { github, nightOwl, tomorrow } from 'react-syntax-highlighter/dist/esm/styles/hljs'
+import { nord, prism, vscDarkPlus, dracula} from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs'
+
 
 const ArticleDetail = () => {
   const { id } = useParams()
@@ -92,7 +97,47 @@ const ArticleDetail = () => {
       </div>
     )
   }
-
+  const MarkdownComponents = {
+    code({ node, inline, className, children, ...props }) {
+      const match = /language-(\w+)/.exec(className || '')
+      return !inline && match ? (
+        <SyntaxHighlighter
+          style={vscDarkPlus} // 这里设置你喜欢的主题
+          language={match[1]}
+          PreTag="div"
+          showLineNumbers={true}
+          customStyle={{
+          margin: '16px 0',
+          padding: '16px',
+          borderRadius: '8px',
+          fontSize: '14px',
+          backgroundColor: '#1C1B1F', // 确保背景色统一
+        }}
+        // 2. 关键：强制应用到代码标签
+        codeTagProps={{
+          style: {
+            fontFamily: "'Fira Code', 'JetBrains Mono', Consolas, monospace",
+            lineHeight: '1.5',
+          }
+        }}
+          {...props}
+        >
+          {String(children).replace(/\n$/, '')}
+        </SyntaxHighlighter>
+      ) : (
+        <code className={className}
+        style={{ 
+          fontFamily: "'Fira Code', monospace",
+          // backgroundColor: 'rgba(175, 184, 193, 0.2)',
+          padding: '2px 4px',
+          borderRadius: '4px'
+        }}
+        {...props}>
+          {children}
+        </code>
+      )
+    }
+  }
   return (
     <div className="container">
       <article className="article-detail">
@@ -118,7 +163,7 @@ const ArticleDetail = () => {
         </div>
         
         <div className="markdown-content">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          <ReactMarkdown remarkPlugins={[remarkGfm]} components={MarkdownComponents}>
             {article.body || ''}
           </ReactMarkdown>
         </div>
