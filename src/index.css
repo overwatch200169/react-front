@@ -2652,6 +2652,12 @@ body {
 
 .cherry.theme__dark .cherry-detail details .cherry-detail-body{
 background-color: #2b3f33 !important;
+overflow: hidden;
+}
+
+.cherry.theme__light .cherry-detail details .cherry-detail-body{
+background-color: #ecf3f0 !important;
+overflow: hidden;
 }
 
 .cherry.theme__light .cherry-detail details summary,
@@ -2684,5 +2690,14 @@ background-color: #2b3f33 !important;
   background: #3f584c !important; 
 
   color: #DCE3DD  !important;
+  
+}
+
+.cherry.theme__dark figure .edgeLabel{
+  background: none !important;
+color: #DCE3DD  !important;
+}
+.cherry.theme__light figure .edgeLabel{
+  background: none !important;
   
 }
