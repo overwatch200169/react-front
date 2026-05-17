@@ -7,13 +7,15 @@ import { useTheme } from '../context/ThemeContext'
 import LazyImage from '../components/LazyImage'
 import '../styles/LazyImage.css'
 
+
 const EggPage = () => {
   const [eggList, setEggList] = useState([])
   const [checkiData, setCheckiData] = useState([])
   const [loading, setLoading] = useState(true)
   const [isMobile, setIsMobile] = useState(false)
   const [isTablet, setIsTablet] = useState(false)
-  const { isDark } = useTheme()
+  const { resolvedTheme } = useTheme()
+  const isDark = resolvedTheme === 'dark'
 
   useEffect(() => {
     fetchEggData()
@@ -128,6 +130,11 @@ const EggPage = () => {
     picture_url: item.picture_url || null
   }))
 
+
+  const textColor = isDark ? '#DCE3DD' : '#2D3B32'
+  const connectorColor = isDark ? 'rgba(220, 227, 221, 0.4)' : 'rgba(45, 59, 50, 0.4)'
+  const chartThemeMode = resolvedTheme // 直接对齐 'light' 或 'dark'
+
   return (
     <div className="container">
       <div className="about-content">
@@ -175,12 +182,13 @@ const EggPage = () => {
                 marginBottom={isMobile ? 20 : 50}
                 marginRight={isMobile ? 10 : 20}
                 theme={{
-                  colorScheme: isDark ? 'dark' : 'light',
+                  colorScheme: chartThemeMode,
                   defaultColor: isDark ? '#7AAF8A' : '#6B9B7A',
                   style: {
                     backgroundColor: 'transparent',
                   },
                 }}
+                
                 label={{
                   text: (d) => isMobile ? d.value : `${d.type}  ${d.value}张  ${d.percent.toFixed(0)}%`,
                   position: isMobile ? 'outside' : 'spider',
@@ -204,7 +212,7 @@ const EggPage = () => {
                   style: {
                     fontWeight: 'bold',
                     fontSize: isMobile ? 10 : 12,
-                    fill: isDark ? '#DCE3DD' : '#2D3B32',
+                    fill: textColor,
                   },
                 }}
                 legend={{
@@ -212,12 +220,12 @@ const EggPage = () => {
                     title: false,
                     position: (isMobile || isTablet) ? 'bottom' : 'right',
                     rowPadding: 5,
-                    itemLabelFill: isDark ? '#DCE3DD' : '#2D3B32',
+                    itemLabelFill: textColor
                   },
                   style: {
                     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
                     fontSize: isMobile ? 10 : 13,
-                    fill: isDark ? '#DCE3DD' : '#2D3B32',
+                    fill: textColor
                   },
                 }}
                 tooltip={{
@@ -233,8 +241,14 @@ const EggPage = () => {
                   tooltip: {
                     css: {
                       '.g2-tooltip-list-item-value': {
-                        color: isDark ? '#DCE3DD' : '#2D3B32',
-                      },
+          color: textColor, // 🟢 注入
+        },
+        '.g2-tooltip-list-item-name': {
+          color: textColor, // 🟢 追加：防止类名不一致导致部分失色
+        },
+        '.g2-tooltip-title': {
+          color: textColor, // 🟢 追加：标题文字颜色
+        }
                     },
                   }
                 }}
@@ -248,7 +262,8 @@ const EggPage = () => {
                       textAlign: 'center',
                       fontSize: isMobile ? 10 : 30,
                       fontWeight: 'bold',
-                      fill: isDark ? '#DCE3DD' : '#2D3B32',
+                      fill: textColor,  // 🟢 注入：G2 使用 fill 渲染文本颜色
+        // color: textColor, // 注入
                     },
                   },
                 ]}
