@@ -5,17 +5,8 @@ import { useTheme } from '../context/ThemeContext';
 
 // 🟢 1. 提取到组件外部（文件最顶部）！
 // 这样它在文件加载时就100%初始化完成了，组件内部任何地方调用都绝不会报 ReferenceError。
-const [isMobile, setIsMobile] = useState(false)
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768)
-    }
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
 
-const getCherryOptions = (element, theme, initialContent) => ({
+const getCherryOptions = (element, theme, initialContent,isMobile) => ({
   el: element, // 显式将 DOM 节点传入
   value: initialContent || '',
   nameSpace: 'cherry', 
@@ -48,6 +39,16 @@ export default function CherryRenderer({ content }) {
   const containerRef = useRef(null);
   const cherryInstanceRef = useRef(null);
   const { resolvedTheme } = useTheme();
+  const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
 
   // 🟢 2. 处理内容同步与初始化
   useEffect(() => {
@@ -56,7 +57,7 @@ export default function CherryRenderer({ content }) {
     if (!cherryInstanceRef.current) {
       // 传入 containerRef.current 物理节点、当前物理主题、以及初始内容
       cherryInstanceRef.current = new Cherry(
-        getCherryOptions(containerRef.current, resolvedTheme, content)
+        getCherryOptions(containerRef.current, resolvedTheme, content,isMobile)
       );
     } else {
       cherryInstanceRef.current.setValue(content || '');
