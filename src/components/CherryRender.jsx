@@ -5,6 +5,16 @@ import { useTheme } from '../context/ThemeContext';
 
 // 🟢 1. 提取到组件外部（文件最顶部）！
 // 这样它在文件加载时就100%初始化完成了，组件内部任何地方调用都绝不会报 ReferenceError。
+const [isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
 const getCherryOptions = (element, theme, initialContent) => ({
   el: element, // 显式将 DOM 节点传入
   value: initialContent || '',
@@ -17,6 +27,13 @@ const getCherryOptions = (element, theme, initialContent) => ({
     inlineCodeTheme:  'black'
     },
   editor: { defaultModel: 'previewOnly' },
+   previewer: {
+    
+    enablePreviewerBubble: false,
+    isMobilePreview: isMobile?true:false ,
+    floatWhenClosePreviewer: false,
+    lazyLoadImg : {noLoadImgNum: 0, autoLoadImgNum: -1}
+  },
   toolbars: { showToolbar: false, bubble: false, float: false },
   engine: {
     global: { urlProcessor: (url) => url },
