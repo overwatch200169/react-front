@@ -2675,6 +2675,11 @@ body {
 
 }
 
+.cherry.theme__dark .cherry-previewer  ul {
+  background: none !important;
+  
+
+}
 
 .cherry-renderer-wrapper .cherry-previewer .cherry-code-expand pre{
   padding-top: 40px;
