@@ -164,6 +164,7 @@ const EggPage = () => {
             }}>
               <div style={{ width: isMobile ? '100%' : 800, display: 'flex', justifyContent: 'center' }}>
                 <Pie
+                key={resolvedTheme}
                 data={checkiData.map(item => ({
                   type: item.name || '未知',
                   value: item.cheki_count || 0,
