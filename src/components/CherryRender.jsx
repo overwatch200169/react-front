@@ -13,7 +13,7 @@ const getCherryOptions = (element, theme, initialContent) => ({
     
     mainTheme: theme === 'dark' ? 'dark' : 'light',
     codeBlockTheme:  'defualt',
-  // 🔴 官方只吃 'red' 或 'black'。我们可以让白天用 red，暗黑用 black，但核心视觉依然靠上面的 CSS 来拯救。
+ 
     inlineCodeTheme:  'black'
     },
   editor: { defaultModel: 'previewOnly' },

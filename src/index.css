@@ -2621,7 +2621,7 @@ body {
 
 .cherry-renderer-wrapper .cherry-previewer :not(pre) > code{
 
-  background-color: #DCE3DD !important;
+  background-color: #5b685d !important;
  
 }
 
@@ -2632,4 +2632,57 @@ body {
   padding-bottom: 40px;
   background-color: #1c1b1f;
  
+}
+.cherry.theme__light .cherry-detail__multiple,
+.cherry.theme__dark .cherry-detail__multiple{
+  border: none !important ;
+  box-shadow: none !important;
+}
+.cherry.theme__dark .cherry-detail details summary,
+ .cherry.theme__dark .cherry-panel__primary .cherry-panel--title{
+  background: #7AAF8A !important; 
+  color: #DCE3DD !important;           
+  transition: background-color 0.2s ease;
+}
+.cherry.theme__dark .cherry-detail details summary:hover {
+  background: #56685c !important; 
+  color: #bbc7be !important;            
+  transition: background-color 0.2s ease;
+}
+
+.cherry.theme__dark .cherry-detail details .cherry-detail-body{
+background-color: #2b3f33 !important;
+}
+
+.cherry.theme__light .cherry-detail details summary,
+.cherry.theme__light .cherry-panel__primary .cherry-panel--title {
+  background: #D4E5D9 !important; 
+  color: #0f172a !important;
+  transition: background-color 0.2s ease;
+}
+
+
+.cherry.theme__light .cherry-detail details summary:hover {
+  background: #E8F0EB !important; 
+  color: #0f172a !important;
+  transition: background-color 0.2s ease;
+}
+.cherry.theme__light.cherry-panel__primary.cherry-panel,
+.cherry.theme__dark.cherry-panel__primary.cherry-panel{
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+.cherry.theme__light .cherry-panel__primary .cherry-panel--body{
+  background: #ccdbd4 !important; 
+
+  color: #0f172a !important;
+  
+}
+
+.cherry.theme__dark .cherry-panel__primary .cherry-panel--body{
+  background: #3f584c !important; 
+
+  color: #DCE3DD  !important;
+  
 }
