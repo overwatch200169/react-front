@@ -9,7 +9,7 @@ import { PrismAsync, Prism as SyntaxHighlighter } from 'react-syntax-highlighter
 import { github, nightOwl, tomorrow } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import { nord, prism, vscDarkPlus, dracula} from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { tomorrowNight } from 'react-syntax-highlighter/dist/cjs/styles/hljs'
-
+import  CherryRenderer from '../components/CherryRender'
 
 const ArticleDetail = () => {
   const { id } = useParams()
@@ -168,9 +168,10 @@ const formatDate = (dateString) => {
         </div>
         
         <div className="markdown-content">
-          <ReactMarkdown remarkPlugins={[remarkGfm]} components={MarkdownComponents}>
+          {/* <ReactMarkdown remarkPlugins={[remarkGfm]} components={MarkdownComponents}>
             {article.body || ''}
-          </ReactMarkdown>
+          </ReactMarkdown> */}
+          <CherryRenderer content={article.body||''} />
         </div>
         
         <div style={{ marginTop: '48px', paddingTop: '24px', borderTop: '1px solid var(--border-color)' }}>
