@@ -172,8 +172,8 @@ const EggPage = () => {
                 }))}
                 angleField="value"
                 colorField="type"
-                radius={isMobile ? 0.5 : 0.7}
-                innerRadius={isMobile ? 0.35 : 0.4}
+                radius={isMobile ? 0.9 : 0.7}
+                innerRadius={isMobile ? 0.6 : 0.4}
                 
                 height={isMobile ? 500 : 700}
                 // width={isMobile ? 400 : 800}
@@ -190,9 +190,9 @@ const EggPage = () => {
                   },
                 }}
                 
-                label={{
-                  text: (d) => isMobile ? d.value : `${d.type}  ${d.value}张  ${d.percent.toFixed(0)}%`,
-                  position: isMobile ? 'outside' : 'spider',
+                label={isMobile ? false: {
+                  text: (d) => `${d.type}  ${d.value}张  ${d.percent.toFixed(0)}%`,
+                  position:  'outside',
                   connector: true,
                   connectorStroke: isDark ? '#DCE3DD' : '#2D3B32',
                   connectorLineWidth: 1,
@@ -261,7 +261,7 @@ const EggPage = () => {
                       x: '50%',
                       y: '50%',
                       textAlign: 'center',
-                      fontSize: isMobile ? 10 : 30,
+                      fontSize: isMobile ? 20 : 30,
                       fontWeight: 'bold',
                       fill: textColor,  // 🟢 注入：G2 使用 fill 渲染文本颜色
         // color: textColor, // 注入
