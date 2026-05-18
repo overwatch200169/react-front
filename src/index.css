@@ -383,6 +383,164 @@ a:hover {
   font-size: 20px;
 }
 
+
+/* ==========================================================================
+   🟢 Header 响应式布局优化 (Material 3 风格)
+   ========================================================================== */
+
+/* 头部基础布局 */
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 74px; /* 锁死桌面端和移动端的高度，避免挤占视野 */
+  position: relative;
+  z-index: 50;
+  background-color: var(--md-surface);
+}
+
+/* 右侧图标功能区：保持图标等距、和谐 */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* 图标之间的绝佳呼吸感间距 */
+}
+
+.action-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--md-on-surface);
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.action-icon:hover {
+  background-color: var(--md-surface-container-high);
+}
+
+/* 默认隐藏移动端专属元素 */
+.mobile-only { display: none; }
+.mobile-search-overlay { display: none; }
+.mobile-nav-drawer { display: none; }
+
+/* ==========================================
+   📱 移动端断点 (屏幕小于 768px 时)
+   ========================================== */
+@media (max-width: 768px) {
+  /* 隐藏桌面端的累赘元素 */
+  .desktop-only { 
+    display: none !important; 
+  }
+  
+  /* 显示移动端图标 */
+  .mobile-only { 
+    display: flex; 
+  }
+
+  /* 悬浮搜索栏：直接覆盖在 Header 下方 */
+  .mobile-search-overlay {
+    display: block;
+    position: absolute;
+    top: 64px; /* 紧贴 Header 底部 */
+    left: 0;
+    width: 100%;
+    padding: 12px 16px;
+    background-color: var(--md-surface);
+    border-bottom: 1px solid var(--md-outline-variant);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    z-index: 49;
+    animation: slideDown 0.2s ease-out;
+
+  }
+
+  .mobile-search-form {
+    display: flex;
+    align-items: center;
+    background-color: var(--md-surface-container-high);
+    border-radius: 24px;
+    padding: 0 16px;
+    height: 44px;
+  }
+
+  .mobile-search-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: var(--md-on-surface);
+    outline: none;
+    margin: 0 12px;
+    font-size: 16px;
+  }
+
+  .mobile-search-icon, .mobile-search-close {
+    color: var(--md-on-surface-variant);
+    background: none;
+    border: none;
+    font-size: 18px;
+  }
+
+  /* 移动端下拉菜单抽屉 */
+  .mobile-nav-drawer {
+    display: block;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    width: 100%;
+    background-color: var(--md-surface);
+    border-bottom: 1px solid var(--md-outline-variant);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    transform: translateY(-150%);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 48;
+  }
+
+  .mobile-nav-drawer.open {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 24px;
+    gap: 20px;
+    
+  }
+
+  .mobile-nav-link {
+    font-size: 16px;
+    color: var(--md-on-surface);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .mobile-nav-link.active {
+    color: var(--md-primary);
+  }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+@media (min-width: 769px) {
+
+
+  /* 3. 彻底断绝移动端动作容器在桌面端的占位隐患 */
+  .header .header-actions {
+    display: none !important;      /* 在 PC 端直接完全物理抹除，不参与 Flex 空间分配 */
+  }
+}
 .nav {
   display: flex;
   gap: 8px;
@@ -1032,7 +1190,7 @@ a:hover {
 /* ========== Responsive ========== */
 @media (max-width: 768px) {
   .header-content {
-    flex-direction: column;
+    /* flex-direction: column; */
     gap: 16px;
   }
 
@@ -2610,6 +2768,7 @@ body {
 
 /* 2. 清除预览区域默认的巨大内边距（Padding），让文字对齐你的网页边缘 */
 .cherry-renderer-wrapper .cherry .cherry-previewer {
+  padding: 3% !important;
   background-color: transparent !important;
   background: transparent !important;
   /* 继承你网页的主字体和行高 */
@@ -2751,7 +2910,7 @@ overflow: hidden;
 
 .cherry.theme__light .cherry-panel__primary{
   background: #ccdbd4 !important; 
-
+  border-color:var(--loom-border) !important;
   color: #0f172a !important;
   
 }

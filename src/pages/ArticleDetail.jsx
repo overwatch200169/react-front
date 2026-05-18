@@ -178,15 +178,24 @@ const formatDate = (dateString) => {
           <button 
             className="back-button"
             onClick={() => {
+              window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
               navigate('/')
-              setTimeout(() => {
-                const contentSection = document.getElementById('articles-section')
-                if (contentSection) {
-                  contentSection.scrollIntoView({ behavior: 'smooth' })
-                } else {
-                  window.scrollTo({ top: 0, behavior: 'smooth' })
-                }
-              }, 100)
+              let attempts = 0;
+              const findAndScroll = setInterval(() => {
+              const contentSection = document.getElementById('articles-section');
+              attempts++;
+                
+              if (contentSection) {
+                  // 一旦抓到节点，立刻停止轮询，并执行精准平滑滚动
+                  clearInterval(findAndScroll);
+                  // 加入 block: 'start' 确保滚动对齐到元素顶部，避免位置偏移
+                  contentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else if (attempts >= 15) { 
+                  // 尝试 15 次（约 750ms），如果还没找到（比如 API 慢了），则停止探测并执行兜底
+                  clearInterval(findAndScroll);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }
+              }, 50); // 每 50 毫秒侦测一次
             }}
           >
             ← 返回文章列表
