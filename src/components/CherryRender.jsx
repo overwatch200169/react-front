@@ -29,6 +29,7 @@ const getCherryOptions = (element, theme, initialContent,isMobile) => ({
   toolbars: { showToolbar: false, bubble: false, float: false },
   engine: {
     global: { urlProcessor: (url) => url },
+ 
     // syntax: {
     //   autoLink: true, table: true, fontColor: true, fontSize: true,
     //   headerId: true, mermaid: true, chart: true,
@@ -70,8 +71,50 @@ export default function CherryRenderer({ content }) {
     } else {
       cherryInstanceRef.current.setValue(content || '');
     }
+// 2. 定义处理 a 标签的函数
+    const updateLinks = () => {
+      if (!containerRef.current) return;
+      
+      // 查找 Cherry 渲染区内的所有 a 标签
+      const links = containerRef.current.querySelectorAll('.cherry-previewer a');
+      
+      links.forEach((link) => {
+        const href = link.getAttribute('href');
+        
+        // 核心过滤：如果有 href，且不是以 # 开头的本地锚点，且还没有设置 target
+        if (href && !href.startsWith('#') && link.getAttribute('target') !== '_blank') {
+          // 强行注入原生属性
+          link.setAttribute('target', '_blank');
+          link.setAttribute('rel', 'noopener noreferrer');
+        }
+      });
+    };
 
+    // 3. 建立 DOM 监听器 (MutationObserver)
+    // 只要 Cherry 更新了内容，我们就重新执行 updateLinks
+    const observer = new MutationObserver(() => {
+      updateLinks();
+    });
+
+    // 开始监听容器内的子节点变化
+    observer.observe(containerRef.current, {
+      childList: true, // 监听子节点的增减
+      subtree: true,   // 监听所有后代节点
+    });
+
+    // 第一次渲染完成后主动执行一次
+    updateLinks();
+
+    // 4. 组件销毁时清理监听器和实例
+    return () => {
+      observer.disconnect();
+      if (cherryInstanceRef.current) {
+        cherryInstanceRef.current.destroy();
+      }
+    };
   }, [content]); 
+
+
 
   // 🟢 3. 安全管理主题切换
   useEffect(() => {
@@ -100,9 +143,9 @@ export default function CherryRenderer({ content }) {
       {/* 🟢 1. 挂载一个隐藏的单独 Image 组件，专门用来提供 Antd 的预览框能力 */}
       <Image.PreviewGroup
         preview={{
-          visible: previewVisible,
+          open: previewVisible,
           current: currentIndex,
-          onVisibleChange: (value) => setPreviewVisible(value),
+          onOpenChange: (value) => setPreviewVisible(value),
           onChange: (current) => setCurrentIndex(current), // 切换图片时同步索引
         }}
         items={imageList} // 将提取到的所有图片列表喂给 Antd
