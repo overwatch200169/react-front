@@ -14,7 +14,7 @@ const getCherryOptions = (element, theme, initialContent,isMobile) => ({
   themeSettings: {
     
     mainTheme: theme === 'dark' ? 'dark' : 'light',
-    codeBlockTheme:  'default',
+    codeBlockTheme:  'dark',
  
     inlineCodeTheme:  'black'
     },
