@@ -894,15 +894,15 @@ a:hover {
 }
 
 .markdown-content code {
-  background: var(--md-surface-container-high);
-  padding: 2px 8px;
-  border-radius: var(--md-shape-small);
+  background: var(--md-surface-container-high)!important;
+  padding: 2px 8px!important;
+  border-radius: var(--md-shape-small)!important;
   font-family: 'Roboto Mono', monospace;
-  font-size: 0.9em;
+  font-size: 0.9em!important;
 }
 
 .markdown-content pre {
-  background: #1C1B1F;
+  background: #1C1B1F!important;
   color: #E6E1E5;
   padding: 20px;
   border-radius: var(--md-shape-large);
@@ -911,28 +911,28 @@ a:hover {
 }
 
 .markdown-content pre code {
-  background: none;
+  background: none!important;
   padding: 0;
   color: inherit;
   font-size: var(--md-body-medium);
 }
 
 .markdown-content blockquote {
-  border-left: 4px solid var(--md-primary);
-  padding-left: 20px;
-  margin: 24px 0;
-  color: var(--md-on-surface-variant);
+  border-left: 4px solid var(--md-primary)!important;
+  padding-left: 20px!important;
+  margin: 24px 0!important;
+  color: var(--md-on-surface-variant)!important;
   font-style: italic;
 }
 
 .markdown-content a {
-  color: var(--md-primary);
-  text-decoration: underline;
-  text-underline-offset: 2px;
+  color: var(--md-primary)!important;
+  text-decoration: underline!important;
+  text-underline-offset: 2px!important;
 }
 
 .markdown-content a:hover {
-  color: var(--md-on-primary-container);
+  color: var(--md-on-primary-container)!important;
 }
 
 .markdown-content img {
@@ -942,23 +942,48 @@ a:hover {
 }
 
 .markdown-content table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 24px 0;
-  border-radius: var(--md-shape-medium);
-  overflow: hidden;
+  width: 100% !important;
+  margin: 24px 0 !important;
+  
+  /* 1. 核心修改：改为独立边框模型 */
+  border-collapse: separate !important; 
+  /* 2. 核心修改：消除单元格之间的自带间隙 */
+  border-spacing: 0 !important;          
+  
+  /* 3. 此时圆角和 overflow 可以完美和谐共存 */
+  border-radius: var(--md-shape-medium) !important;
+  overflow: hidden !important;
+  
+  /* 4. 将表格的“外边框”交由 table 自身来绘制 */
+  border: 1px solid var(--md-outline-variant) !important; 
 }
 
 .markdown-content th,
 .markdown-content td {
-  border: 1px solid var(--md-outline-variant);
-  padding: 16px;
-  text-align: left;
+  /* 5. 核心修改：不要使用四周全边框，改用右边框和下边框，防止内部线条重叠变粗 */
+  border-top: none !important;
+  border-left: none !important;
+  border-right: 1px solid var(--md-outline-variant) !important;
+  border-bottom: 1px solid var(--md-outline-variant) !important;
+  
+  padding: 16px !important;
+  text-align: left !important;
 }
 
+/* 6. 核心修改：移除最后一列的右边框和最后一行的下边框，避免与 table 自身的外边框产生冲突 */
+.markdown-content th:last-child,
+.markdown-content td:last-child {
+  border-right: none !important;
+}
+
+.markdown-content tr:last-child td {
+  border-bottom: none !important;
+}
+
+/* 保持你原本的 th 背景色 */
 .markdown-content th {
-  background: var(--md-surface-container-high);
-  font-weight: 500;
+  background: var(--md-surface-container-high) !important;
+  font-weight: 500 !important;
 }
 
 /* ========== Tags Page ========== */
